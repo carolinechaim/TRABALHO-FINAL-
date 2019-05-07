@@ -9,9 +9,11 @@ Jogo: Pitfall atari
 
 Descrição: 
 	- Sketches de tela:
+
+
 	- Mecânica do produto:
 
 Cronograma de evolução:
-	- Evolução do EMP:
+	- Evolução do MVP:
 
 
