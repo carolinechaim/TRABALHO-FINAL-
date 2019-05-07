@@ -10,20 +10,31 @@ Jogo: Pitfall atari
 Descrição: 
 	- Sketches de tela:
 
+imagem de fundo_1.jpg
+imagem de fundo_2.png
 
 	- Mecânica do produto:
+Boneco: 
+	- andar
+	- pular
+	- morrer 
 
 Cronograma de evolução:
 	- Evolução do MVP:
 		10/05:
-		   * defnir background
+		   * definir background
 		   * boneco andar e pular
+		   * tela de inicio 
 	    	17/05:
 		   * boneco morrer
 		   * adicionar buraco 
+		   * ter definido a lista de obstaculos
 		24/05: 
-		   *
-		   * 
+		   * terminar os obstaculos 
+		   * criar vidas
 		
+		31/05:
+		   * adicionar multiplayer
+
 
 
