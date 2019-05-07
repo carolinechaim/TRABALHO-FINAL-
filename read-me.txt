@@ -15,5 +15,15 @@ Descrição:
 
 Cronograma de evolução:
 	- Evolução do MVP:
+		10/05:
+		   * defnir background
+		   * boneco andar e pular
+	    	17/05:
+		   * boneco morrer
+		   * adicionar buraco 
+		24/05: 
+		   *
+		   * 
+		
 
 
