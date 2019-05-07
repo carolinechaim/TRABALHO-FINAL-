@@ -7,8 +7,8 @@ import time
 from os import path
 
 # Estabelece a pasta que contem as figuras e sons.
-img_dir = path.join(path.dirname(__file__), 'img')
-snd_dir = path.join(path.dirname(__file__), 'snd')
+img_dir = path.join(path.dirname(__file__), 'imagem')
+#snd_dir = path.join(path.dirname(__file__), 'snd') 
 
 # Dados gerais do jogo.
 WIDTH = 480 # Largura da tela
@@ -33,7 +33,7 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        player_img = pygame.image.load(path.join(img_dir, "playerShip1_orange.png")).convert()
+        player_img = pygame.image.load(path.join(img_dir, "imagem de fundo_2.png")).convert()
         self.image = player_img
         
         # Diminuindo o tamanho da imagem.
