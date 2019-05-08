@@ -35,9 +35,10 @@ class Boneco(pygame.sprite.Sprite):
         self.image = player_img
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(player_img, (400,200 ))
+        self.image = pygame.transform.scale(player_img, (80,137 ))
         
         # Deixando transparente.
+
         self.image.set_colorkey(BLACK)
         
         # Detalhes sobre o posicionamento.
@@ -45,24 +46,66 @@ class Boneco(pygame.sprite.Sprite):
         
         # Centraliza embaixo da tela.
         self.rect.centerx =  WIDTH - 950 
-        self.rect.bottom = HEIGHT 
+        self.rect.bottom = HEIGHT - 50
         
         # Velocidade do boneco
         self.speedx = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = 25
+        
+        def bon_anim(self, center, boneco_anim):
+            # Carrega a animação de explosão
+            self.boneco_anim = boneco_anim
     
+            # Inicia o processo de animação colocando a primeira imagem na tela.
+            self.frame = 0
+            self.image = self.boneco_anim[self.frame]
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+    
+            # Guarda o tick da primeira imagem
+            self.last_update = pygame.time.get_ticks()
+    
+            # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+            self.frame_ticks = 50
+        def update(self):
+        # Verifica o tick atual.
+            now = pygame.time.get_ticks()
+    
+            # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+            elapsed_ticks = now - self.last_update
+    
+            # Se já está na hora de mudar de imagem...
+            if elapsed_ticks > self.frame_ticks:
+    
+                # Marca o tick da nova imagem.
+                self.last_update = now
+    
+                # Avança um quadro.
+                self.frame += 1
+    
+                # Verifica se já chegou no final da animação.
+                if self.frame == len(self.explosion_anim):
+                    # Se sim, tchau explosão!
+                    self.kill()
+                else:
+                    # Se ainda não chegou ao fim da explosão, troca de imagem.
+                    center = self.rect.center
+                    self.image = self.explosion_anim[self.frame]
+                    self.rect = self.image.get_rect()
+                    self.rect.center = center
+
     # Metodo que atualiza a posição do boneco
     def update(self):
         self.rect.x += self.speedx
-        """
+
         # Mantem dentro da tela
-        if self.rect.right > WIDTH:
+        if self.rect.right >= WIDTH:
             self.rect.right = WIDTH
-        if self.rect.left < 0:
+        if self.rect.left <= 0:
             self.rect.left = 0
-"""
+
 
 # Inicialização do Pygame.
 pygame.init()
@@ -72,7 +115,7 @@ pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 # Nome do jogo
-pygame.display.set_caption("Navinha")
+pygame.display.set_caption("PitFall")
 
 # Variável para o ajuste de velocidade
 clock = pygame.time.Clock()
@@ -96,7 +139,7 @@ try:
     # Loop principal.
     running = True
     while running:
-        
+         
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
         
