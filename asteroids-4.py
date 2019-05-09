@@ -46,10 +46,13 @@ class Boneco(pygame.sprite.Sprite):
         
         # Centraliza embaixo da tela.
         self.rect.centerx =  WIDTH - 950 
-        self.rect.bottom = HEIGHT - 50
+        self.rect.bottom = HEIGHT - 65
+        
+        
         
         # Velocidade do boneco
         self.speedx = 0
+        self.speedy = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = 25
@@ -99,6 +102,8 @@ class Boneco(pygame.sprite.Sprite):
     # Metodo que atualiza a posição do boneco
     def update(self):
         self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
 
         # Mantem dentro da tela
         if self.rect.right >= WIDTH:
@@ -157,14 +162,23 @@ try:
                     player.speedx = -8
                 if event.key == pygame.K_RIGHT:
                     player.speedx = 8
+                if event.key == pygame.K_SPACE:
+                    player.speedy -= 10
+              
                     
-            # Verifica se soltou alguma tecla.
+                    
+        # Verifica se soltou alguma tecla.
             if event.type == pygame.KEYUP:
                 # Dependendo da tecla, altera a velocidade.
                 if event.key == pygame.K_LEFT:
                     player.speedx = 0
                 if event.key == pygame.K_RIGHT:
                     player.speedx = 0
+                if event.key == pygame.K_SPACE:
+                    player.speedy = 0
+                    player.rect.bottom = HEIGHT - 65
+                    
+
                     
         # Depois de processar os eventos.
         # Atualiza a acao de cada sprite.
