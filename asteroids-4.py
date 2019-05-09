@@ -163,7 +163,7 @@ try:
                 if event.key == pygame.K_RIGHT:
                     player.speedx = 8
                 if event.key == pygame.K_SPACE:
-                    player.speedy -= 10
+                    player.speedy = -10
               
                     
                     
@@ -175,11 +175,12 @@ try:
                 if event.key == pygame.K_RIGHT:
                     player.speedx = 0
                 if event.key == pygame.K_SPACE:
-                    player.speedy = 0
-                    player.rect.bottom = HEIGHT - 65
-                    
-
-                    
+                    if player.rect.bottom <= 700:
+                        player.speedy = 10
+                    if player.rect.bottom >= 1000:
+                        player.speedy =0
+                        
+                  
         # Depois de processar os eventos.
         # Atualiza a acao de cada sprite.
         all_sprites.update()
