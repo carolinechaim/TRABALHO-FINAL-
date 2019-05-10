@@ -8,16 +8,21 @@ Turma: 	B
 Jogo: Pitfall atari
 
 Descrição: 
-	- Sketches de tela:
 
-imagem de fundo_1.jpg
-imagem de fundo_2.png
+- Sketches de tela:
+	
+	
+![alt text]("./imagens/imagem de fundo_1.jpg" "Tela 1")
+![alt text]("./imagens/imagem de fundo_2.jpg" "Tela 2")
 
-	- Mecânica do produto:
+
+- Mecânica do produto:
+
 Boneco: 
-	- andar
-	- pular
-	- morrer 
+
+- andar
+- pular
+- morrer 
 
 Cronograma de evolução:
 	- Evolução do MVP:
