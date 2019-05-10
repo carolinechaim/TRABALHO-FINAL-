@@ -11,9 +11,8 @@ Descrição:
 
 - Sketches de tela:
 	
-	
-![alt text]("./imagens/imagem de fundo_1.jpg" "Tela 1")
-![alt text]("./imagens/imagem de fundo_2.jpg" "Tela 2")
+<img src="./imagens/imagem de fundo_1.jpg" width="300">	
+<img src="./imagens/imagem de fundo_2.jpg" width="300">	
 
 
 - Mecânica do produto:
