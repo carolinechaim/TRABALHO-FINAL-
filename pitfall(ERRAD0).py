@@ -73,31 +73,19 @@ class Boneco(pygame.sprite.Sprite):
             # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
             self.frame_ticks = 50
         def update(self):
-        # Verifica o tick atual.
-            now = pygame.time.get_ticks()
-    
-            # Verifica quantos ticks se passaram desde a ultima mudança de frame.
-            elapsed_ticks = now - self.last_update
-    
-            # Se já está na hora de mudar de imagem...
-            if elapsed_ticks > self.frame_ticks:
-    
-                # Marca o tick da nova imagem.
-                self.last_update = now
-    
-                # Avança um quadro.
-                self.frame += 1
-    
-                # Verifica se já chegou no final da animação.
-                if self.frame == len(self.explosion_anim):
-                    # Se sim, tchau explosão!
-                    self.kill()
-                else:
-                    # Se ainda não chegou ao fim da explosão, troca de imagem.
-                    center = self.rect.center
-                    self.image = self.explosion_anim[self.frame]
-                    self.rect = self.image.get_rect()
-                    self.rect.center = center
+            self.rect.x += self.speedx
+        
+        # Mantem dentro da tela
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.bottom <= 137:
+            self.rect.bottom = 137
+        if self.rect.bottom >= HEIGHT-65:
+            self.rect.bottom = HEIGHT-65
+#        if self.rect.bottom <= 65+137:
+#            self.rect.bottom = 65+137
 
     # Metodo que atualiza a posição do boneco
     def update(self):
