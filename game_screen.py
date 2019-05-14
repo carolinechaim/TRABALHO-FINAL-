@@ -5,7 +5,7 @@ from os import path
 from config import img_dir, snd_dir, fnt_dir, WIDTH, HEIGHT, BLACK, YELLOW, RED, FPS, QUIT
 
 # Classe Jogador que representa a nave
-class Boneco(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
     
     # Construtor da classe.
     def __init__(self, player_img):
@@ -14,10 +14,10 @@ class Boneco(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        self.image = player_img
+        self.image = player_img[0]
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(player_img, (50, 38))
+        self.image = pygame.transform.scale(self.image, (50, 38))
         
         # Deixando transparente.
         self.image.set_colorkey(BLACK)
@@ -49,7 +49,7 @@ class Boneco(pygame.sprite.Sprite):
         if self.rect.bottom >= HEIGHT-65:
             self.rect.bottom = HEIGHT-65
         
-                    
+'''                    
 # Classe Mob que representa os meteoros
 class Mob(pygame.sprite.Sprite):
     
@@ -192,17 +192,18 @@ class Platform(pygame.sprite.Sprite):
     # Metodo que atualiza a posição da navinha
     def update(self):
         pass
-
+'''
 
 # Carrega todos os assets uma vez só.
 def load_assets(img_dir, snd_dir, fnt_dir):
     assets = {}
-    assets["mob_img"] = pygame.image.load(path.join(img_dir, "meteorBrown_med1.png")).convert()
-    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
-    assets["background"] = pygame.image.load(path.join(img_dir, 'starfield.png')).convert()
-    assets["boom_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl3.wav'))
-    assets["destroy_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl6.wav'))
-    assets["pew_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+#    assets["mob_img"] = pygame.image.load(path.join(img_dir, "meteorBrown_med1.png")).convert()
+#    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
+    assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
+#    assets["boom_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl3.wav'))
+#    assets["destroy_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl6.wav'))
+#    assets["pew_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+#    assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
     player_anim = []
     for i in range(15):
         filename = 'frame_{}.png'.format(i)
@@ -211,7 +212,7 @@ def load_assets(img_dir, snd_dir, fnt_dir):
         img.set_colorkey(BLACK)
         player_anim.append(img)
     assets["player_img"] = player_anim
-    assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
+#    assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
     return assets
 
 def game_screen(screen):
@@ -225,42 +226,23 @@ def game_screen(screen):
     background = assets["background"]
     background_rect = background.get_rect()
 
-    # Carrega os sons do jogo
-    pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
-    pygame.mixer.music.set_volume(0.4)
-    boom_sound = assets["boom_sound"]
-    destroy_sound = assets["destroy_sound"]
-    pew_sound = assets["pew_sound"]
-
     # Cria uma nave. O construtor será chamado automaticamente.
     player = Player(assets["player_img"])
 
-    platform = Platform(100, 200, 300, 10)
-    
-    platforms = pygame.sprite.Group()
-    platforms.add(platform)
+#    platform = Platform(100, 200, 300, 10)
+#    
+#    platforms = pygame.sprite.Group()
+#    platforms.add(platform)
 
-    # Carrega a fonte para desenhar o score.
-    score_font = assets["score_font"]
+#    # Carrega a fonte para desenhar o score.
+#    score_font = assets["score_font"]
 
     # Cria um grupo de todos os sprites e adiciona a nave.
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
 
-    # Cria um grupo só dos meteoros
-    mobs = pygame.sprite.Group()
-
-    # Cria um grupo para tiros
-    bullets = pygame.sprite.Group()
-
-    # Cria 8 meteoros e adiciona no grupo meteoros
-    for i in range(8):
-        m = Mob(assets["mob_img"])
-        all_sprites.add(m)
-        mobs.add(m)
-
     # Loop principal.
-    pygame.mixer.music.play(loops=-1)
+
 
     score = 0
 
@@ -291,13 +273,13 @@ def game_screen(screen):
                         player.speedx = -8
                     if event.key == pygame.K_RIGHT:
                         player.speedx = 8
-                    # Se for um espaço atira!
+                    '''# Se for um espaço atira!
                     if event.key == pygame.K_SPACE:
                         bullet = Bullet(player.rect.centerx, player.rect.top, assets["bullet_img"])
                         all_sprites.add(bullet)
                         bullets.add(bullet)
                         pew_sound.play()
-                        
+                     '''   
                 # Verifica se soltou alguma tecla.
                 if event.type == pygame.KEYUP:
                     # Dependendo da tecla, altera a velocidade.
@@ -310,80 +292,79 @@ def game_screen(screen):
         # Atualiza a acao de cada sprite.
         all_sprites.update()
         
-        if state == PLAYING:
-            # Verifica se houve colisão entre tiro e meteoro
-            hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
-            for hit in hits: # Pode haver mais de um
-                # O meteoro e destruido e precisa ser recriado
-                destroy_sound.play()
-                m = Mob(assets["mob_img"]) 
-                all_sprites.add(m)
-                mobs.add(m)
-
-                # No lugar do meteoro antigo, adicionar uma explosão.
-                explosao = Explosion(hit.rect.center, assets["explosion_anim"])
-                all_sprites.add(explosao)
-
-                # Ganhou pontos!
-                score += 100
-                
-            # Verifica se houve colisão entre plataforma e meteoro
-            hits = pygame.sprite.groupcollide(mobs, platforms, True, False)
-            for hit in hits: # Pode haver mais de um
-                # O meteoro e destruido e precisa ser recriado
-                destroy_sound.play()
-                m = Mob(assets["mob_img"]) 
-                all_sprites.add(m)
-                mobs.add(m)
-
-                # No lugar do meteoro antigo, adicionar uma explosão.
-                explosao = Explosion(hit.rect.center, assets["explosion_anim"])
-                all_sprites.add(explosao)
-
-                # Ganhou pontos!
-                score += 100
-            
-            # Verifica se houve colisão entre nave e meteoro
-            hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
-            if hits:
-                # Toca o som da colisão
-                boom_sound.play()
-                player.kill()
-                lives -= 1
-                explosao = Explosion(player.rect.center, assets["explosion_anim"])
-                all_sprites.add(explosao)
-                state = EXPLODING
-                explosion_tick = pygame.time.get_ticks()
-                explosion_duration = explosao.frame_ticks * len(explosao.explosion_anim) + 400
-            
-        elif state == EXPLODING:
-            now = pygame.time.get_ticks()
-            if now - explosion_tick > explosion_duration:
-                if lives == 0:
-                    state = DONE
-                else:
-                    state = PLAYING
-                    player = Player(assets["player_img"])
-                    all_sprites.add(player)
+#        if state == PLAYING:
+#            # Verifica se houve colisão entre tiro e meteoro
+#            hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
+#            for hit in hits: # Pode haver mais de um
+#                # O meteoro e destruido e precisa ser recriado
+#                destroy_sound.play()
+#                m = Mob(assets["mob_img"]) 
+#                all_sprites.add(m)
+#                mobs.add(m)
+#
+#                # No lugar do meteoro antigo, adicionar uma explosão.
+#                explosao = Explosion(hit.rect.center, assets["explosion_anim"])
+#                all_sprites.add(explosao)
+#
+#                # Ganhou pontos!
+#                score += 100
+#                
+#            # Verifica se houve colisão entre plataforma e meteoro
+#            hits = pygame.sprite.groupcollide(mobs, platforms, True, False)
+#            for hit in hits: # Pode haver mais de um
+#                # O meteoro e destruido e precisa ser recriado
+#                destroy_sound.play()
+#                m = Mob(assets["mob_img"]) 
+#                all_sprites.add(m)
+#                mobs.add(m)
+#
+#                # No lugar do meteoro antigo, adicionar uma explosão.
+#                explosao = Explosion(hit.rect.center, assets["explosion_anim"])
+#                all_sprites.add(explosao)
+#
+#                # Ganhou pontos!
+#                score += 100
+#            
+#            # Verifica se houve colisão entre nave e meteoro
+#            hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
+#            if hits:
+#                # Toca o som da colisão
+#                boom_sound.play()
+#                player.kill()
+#                lives -= 1
+#                explosao = Explosion(player.rect.center, assets["explosion_anim"])
+#                all_sprites.add(explosao)
+#                state = EXPLODING
+#                explosion_tick = pygame.time.get_ticks()
+#                explosion_duration = explosao.frame_ticks * len(explosao.explosion_anim) + 400
+#            
+#        elif state == EXPLODING:
+#            now = pygame.time.get_ticks()
+#            if now - explosion_tick > explosion_duration:
+#                if lives == 0:
+#                    state = DONE
+#                else:
+#                    state = PLAYING
+#                    player = Player(assets["player_img"])
+#                    all_sprites.add(player)
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         screen.blit(background, background_rect)
         all_sprites.draw(screen)
         
-        # Desenha o score
-        text_surface = score_font.render("{:08d}".format(score), True, YELLOW)
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (WIDTH / 2,  10)
-        screen.blit(text_surface, text_rect)
+#        # Desenha o score
+#        text_surface = score_font.render("{:08d}".format(score), True, YELLOW)
+#        text_rect = text_surface.get_rect()
+#        text_rect.midtop = (WIDTH / 2,  10)
+#        screen.blit(text_surface, text_rect)
 
-        # Desenha as vidas
-        text_surface = score_font.render(chr(9829) * lives, True, RED)
-        text_rect = text_surface.get_rect()
-        text_rect.bottomleft = (10, HEIGHT - 10)
-        screen.blit(text_surface, text_rect)
+#        # Desenha as vidas
+#        text_surface = score_font.render(chr(9829) * lives, True, RED)
+#        text_rect = text_surface.get_rect()
+#        text_rect.bottomleft = (10, HEIGHT - 10)
+#        screen.blit(text_surface, text_rect)
         
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
-
     return QUIT
