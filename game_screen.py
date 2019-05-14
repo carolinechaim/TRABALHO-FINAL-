@@ -8,10 +8,10 @@ from config import img_dir, snd_dir, fnt_dir, WIDTH, HEIGHT, BLACK, YELLOW, RED,
 class Player(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, player_img):
+    def _init_(self, player_img):
         
         # Construtor da classe pai (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
         
         # Carregando a imagem de fundo.
         self.image = player_img[0]
@@ -54,10 +54,10 @@ class Player(pygame.sprite.Sprite):
 class Mob(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, mob_img):
+    def _init_(self, mob_img):
         
         # Construtor da classe pai (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (50, 38))
@@ -95,10 +95,10 @@ class Mob(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, x, y, bullet_img):
+    def _init_(self, x, y, bullet_img):
         
         # Construtor da classe pai (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
         
         # Carregando a imagem de fundo.
         self.image = bullet_img
@@ -126,9 +126,9 @@ class Bullet(pygame.sprite.Sprite):
 class Explosion(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, center, explosion_anim):
+    def _init_(self, center, explosion_anim):
         # Construtor da classe pai (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
 
         # Carrega a animação de explosão
         self.explosion_anim = explosion_anim
@@ -177,10 +177,10 @@ class Explosion(pygame.sprite.Sprite):
 class Platform(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, x, y, width, height):
+    def _init_(self, x, y, width, height):
         
         # Construtor da classe pai (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
         
         self.image = pygame.Surface([width, height])
         self.image.fill(YELLOW)
