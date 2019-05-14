@@ -5,7 +5,7 @@ from os import path
 from config import img_dir, snd_dir, fnt_dir, WIDTH, HEIGHT, BLACK, YELLOW, RED, FPS, QUIT
 
 # Classe Jogador que representa a nave
-class Player(pygame.sprite.Sprite):
+class Boneco(pygame.sprite.Sprite):
     
     # Construtor da classe.
     def __init__(self, player_img):
