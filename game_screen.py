@@ -39,11 +39,16 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speedx
         
-        # Mantem dentro da tela
-        if self.rect.right > WIDTH:
+# Mantem dentro da tela
+        if self.rect.right >= WIDTH:
             self.rect.right = WIDTH
-        if self.rect.left < 0:
+        if self.rect.left <= 0:
             self.rect.left = 0
+        if self.rect.bottom <= 137:
+            self.rect.bottom = 137
+        if self.rect.bottom >= HEIGHT-65:
+            self.rect.bottom = HEIGHT-65
+        
                     
 # Classe Mob que representa os meteoros
 class Mob(pygame.sprite.Sprite):
@@ -192,21 +197,20 @@ class Platform(pygame.sprite.Sprite):
 # Carrega todos os assets uma vez só.
 def load_assets(img_dir, snd_dir, fnt_dir):
     assets = {}
-    assets["player_img"] = pygame.image.load(path.join(img_dir, "playerShip1_orange.png")).convert()
     assets["mob_img"] = pygame.image.load(path.join(img_dir, "meteorBrown_med1.png")).convert()
     assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'starfield.png')).convert()
     assets["boom_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl3.wav'))
     assets["destroy_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl6.wav'))
     assets["pew_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
-    explosion_anim = []
-    for i in range(9):
-        filename = 'regularExplosion0{}.png'.format(i)
+    player_anim = []
+    for i in range(15):
+        filename = 'frame_{}.png'.format(i)
         img = pygame.image.load(path.join(img_dir, filename)).convert()
         img = pygame.transform.scale(img, (32, 32))        
         img.set_colorkey(BLACK)
-        explosion_anim.append(img)
-    assets["explosion_anim"] = explosion_anim
+        player_anim.append(img)
+    assets["player_img"] = player_anim
     assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
     return assets
 
