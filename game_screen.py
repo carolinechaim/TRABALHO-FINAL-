@@ -2,47 +2,69 @@ import pygame
 import random
 from os import path
 
-from config import img_dir, snd_dir, fnt_dir, WIDTH, HEIGHT, BLACK, YELLOW, RED, FPS, QUIT
+from config import img_dir, WIDTH, HEIGHT, BLACK, YELLOW, RED, FPS, QUIT
 
 # Classe Jogador que representa a nave
 class Boneco(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, player_img):
+    def __init__(self):
         
-        # Construtor da classe pai (Sprite).
+         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
+        player_img = pygame.image.load(path.join(img_dir, 'boneco pulando.png')).convert()
         self.image = player_img
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(player_img, (50, 38))
+        self.image = pygame.transform.scale(player_img, (80,137 ))
         
         # Deixando transparente.
+
         self.image.set_colorkey(BLACK)
         
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
         
         # Centraliza embaixo da tela.
-        self.rect.centerx = WIDTH / 2
-        self.rect.bottom = HEIGHT - 10
+        self.rect.centerx =  WIDTH - 950 
+        self.rect.bottom = HEIGHT - 65
         
-        # Velocidade da nave
+        
+        
+        # Velocidade do boneco
         self.speedx = 0
+        self.speedy = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = 25
+        
+        def bon_anim(self, center, boneco_anim):
+            # Carrega a animação de explosão
+            self.boneco_anim = boneco_anim
     
-    # Metodo que atualiza a posição da navinha
+            # Inicia o processo de animação colocando a primeira imagem na tela.
+            self.frame = 0
+            self.image = self.boneco_anim[self.frame]
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+    
+            # Guarda o tick da primeira imagem
+            self.last_update = pygame.time.get_ticks()
+    
+            # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+            self.frame_ticks = 50
+        # Metodo que atualiza a posição do boneco
     def update(self):
         self.rect.x += self.speedx
+        self.rect.y += self.speedy
         
+
         # Mantem dentro da tela
-        if self.rect.right > WIDTH:
+        if self.rect.right >= WIDTH:
             self.rect.right = WIDTH
-        if self.rect.left < 0:
+        if self.rect.left <= 0:
             self.rect.left = 0
                     
 # Classe Mob que representa os meteoros
