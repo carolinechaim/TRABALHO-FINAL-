@@ -18,7 +18,7 @@ class Boneco(pygame.sprite.Sprite):
         self.image = player_img
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(player_img, (80,137 ))
+        self.image = pygame.transform.scale(player_img, (80,137))
         
         # Deixando transparente.
 
@@ -237,8 +237,8 @@ def load_assets(img_dir, snd_dir, fnt_dir):
 
 def game_screen(screen):
     # Carrega todos os assets uma vez só e guarda em um dicionário
-    assets = load_assets(img_dir, snd_dir, fnt_dir)
-
+#    assets = load_assets(img_dir, snd_dir, fnt_dir)
+    assets = load_assets(img_dir)
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
@@ -253,8 +253,8 @@ def game_screen(screen):
     destroy_sound = assets["destroy_sound"]
     pew_sound = assets["pew_sound"]
 
-    # Cria uma nave. O construtor será chamado automaticamente.
-    player = Player(assets["player_img"])
+    # Cria um Boneco. O construtor será chamado automaticamente.
+    player = Boneco(assets["player_img"])
 
     platform = Platform(100, 200, 300, 10)
     
@@ -384,7 +384,7 @@ def game_screen(screen):
                     state = DONE
                 else:
                     state = PLAYING
-                    player = Player(assets["player_img"])
+                    player = Boneco(assets["player_img"])
                     all_sprites.add(player)
 
         # A cada loop, redesenha o fundo e os sprites

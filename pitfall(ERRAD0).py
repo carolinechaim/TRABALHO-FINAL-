@@ -73,13 +73,19 @@ class Boneco(pygame.sprite.Sprite):
             # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
             self.frame_ticks = 50
         def update(self):
-        self.rect.x += self.speedx
+            self.rect.x += self.speedx
         
         # Mantem dentro da tela
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
+        if self.rect.bottom <= 137:
+            self.rect.bottom = 137
+        if self.rect.bottom >= HEIGHT-65:
+            self.rect.bottom = HEIGHT-65
+#        if self.rect.bottom <= 65+137:
+#            self.rect.bottom = 65+137
 
     # Metodo que atualiza a posição do boneco
     def update(self):
