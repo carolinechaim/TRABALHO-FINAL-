@@ -118,7 +118,7 @@ class Platform(pygame.sprite.Sprite):
         self.image = pygame.Surface([width, height])
         self.image.fill(YELLOW)
 
-#        # Detalhes sobre o posicionamento.
+        # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -130,6 +130,7 @@ class Platform(pygame.sprite.Sprite):
         # Sorteia uma velocidade inicial
         self.speedx = random.randrange(-3, 3)
 #        self.speedy = random.randrange(2, 9)
+        
         
 #        # Melhora a colisão estabelecendo um raio de um circulo
 #        self.radius = int(self.rect.width * .85 / 2)
