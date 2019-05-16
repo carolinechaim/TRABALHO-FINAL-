@@ -107,34 +107,38 @@ class Player(pygame.sprite.Sprite):
 #                self.rect = self.image.get_rect()
 #                self.rect.center = center     
 #                    
-## Classe Mob que representa os meteoros
-#class Mob(pygame.sprite.Sprite):
-#    
-#    # Construtor da classe.
-#    def __init__(self, mob_img):
-#        
-#        # Construtor da classe pai (Sprite).
-#        pygame.sprite.Sprite.__init__(self)
-#        
-#        # Diminuindo o tamanho da imagem.
-#        self.image = pygame.transform.scale(mob_img, (50, 38))
-#        
-#        # Deixando transparente.
-#        self.image.set_colorkey(BLACK)
-#        
+# Classe Platform que representa os buracos
+class Platform(pygame.sprite.Sprite):
+#     # Construtor da classe.
+    def __init__(self, x, y, width, height):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        self.image = pygame.Surface([width, height])
+        self.image.fill(YELLOW)
+
 #        # Detalhes sobre o posicionamento.
-#        self.rect = self.image.get_rect()
-#        
-#        # Sorteia um lugar inicial em x
-#        self.rect.x = random.randrange(WIDTH - self.rect.width)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        
+        # Sorteia um lugar inicial em x
+        self.rect.x = random.randrange(WIDTH - self.rect.width)
 #        # Sorteia um lugar inicial em y
 #        self.rect.y = random.randrange(-100, -40)
-#        # Sorteia uma velocidade inicial
-#        self.speedx = random.randrange(-3, 3)
+        # Sorteia uma velocidade inicial
+        self.speedx = random.randrange(-3, 3)
 #        self.speedy = random.randrange(2, 9)
-#        
+        
 #        # Melhora a colisão estabelecendo um raio de um circulo
 #        self.radius = int(self.rect.width * .85 / 2)
+ 
+    # Metodo que atualiza a posição da navinha
+    def update(self):
+        pass
+
+
 #        
 #    # Metodo que atualiza a posição do meteoro
 #    def update(self):
@@ -270,6 +274,10 @@ def game_screen(screen):
 
     # Cria uma nave. O construtor será chamado automaticamente.
     player = Player(assets["player_img"])
+    platform = Platform(100, 200, 300, 10)
+    
+    platforms = pygame.sprite.Group()
+    platforms.add(platform)
 
 #    # Carrega a fonte para desenhar o score.
 #    score_font = assets["score_font"]
