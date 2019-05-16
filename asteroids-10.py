@@ -69,8 +69,10 @@ class Player(pygame.sprite.Sprite):
     
     # Metodo que atualiza a posição da navinha
     def update(self):
+        
         self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        if self.speedy < 0:
+            self.rect.y += self.speedy
         
         # Mantem dentro da tela
         if self.rect.right >= WIDTH:
