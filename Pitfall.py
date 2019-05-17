@@ -314,7 +314,7 @@ def game_screen(screen):
 
     # Cria 2 meteoros e adiciona no grupo meteoros
     for i in range(2):
-        m = Mob(assets["hole_img"])
+        m = HOLE(assets["hole_img"])
         all_sprites.add(m)
         mobs.add(m)
 
@@ -393,8 +393,8 @@ def game_screen(screen):
 #                # Toca o som da colisão
 #                boom_sound.play()
                 player.kill()
-                background_init = assets["background_init"]
-                background_rect = background_init.get_rect()
+                background = assets["game_over"]
+                background_rect = background.get_rect()
 #                lives -= 1
 #                explosao = Explosion(player.rect.center, assets["explosion_anim"])
 #                all_sprites.add(explosao)
@@ -455,4 +455,3 @@ try:
             state = QUIT
 finally:
     pygame.quit()
-
