@@ -397,18 +397,18 @@ def game_screen(screen):
             
             # Verifica se houve colisão entre nave e meteoro
             hits = pygame.sprite.spritecollide(player, mobs, True)
-            if hits:
+           if hits:
 #                # Toca o som da colisão
 #                boom_sound.play()
                 player.kill()
                 background = assets["game_over"]
                 background_rect = background.get_rect()
 #                lives -= 1
-#                explosao = Explosion(player.rect.center, assets["boneco_anim"])
+#                explosao = Explosion(player.rect.center, assets["explosion_anim"])
 #                all_sprites.add(explosao)
 #                state = EXPLODING
 #                explosion_tick = pygame.time.get_ticks()
-#                explosion_duration = explosao.frame_ticks * len(explosao.boneco_anim) + 400
+#                explosion_duration = explosao.frame_ticks * len(explosao.explosion_anim) + 400
             
 #        if state == EXPLODING:
 #            now = pygame.time.get_ticks()
@@ -421,10 +421,17 @@ def game_screen(screen):
 #                    all_sprites.add(player)
 
         # A cada loop, redesenha o fundo e os sprites
-        screen.fill(BLACK)
-        screen.blit(background, background_rect)
-        all_sprites.draw(screen)
-
+            screen.fill(BLACK)
+            screen.blit(background, background_rect)
+            all_sprites.draw(screen)
+    
+            for event in pygame.event.get() :                    
+                    if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+                        if event.key == pygame.K_SPACE:
+                            state = PLAYING
+                            #player = Player(assets["player_img"])
+                            all_sprites.add(player)
+                            lives -=1 
 #        # Desenha o score
 #        text_surface = score_font.render("{:08d}".format(score), True, YELLOW)
 #        text_rect = text_surface.get_rect()
