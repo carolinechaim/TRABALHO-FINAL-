@@ -24,6 +24,11 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
+# Estados para controle do fluxo da aplicação
+INIT = 0
+GAME = 1
+QUIT = 2
+
 # Classe Jogador que representa a nave
 class Player(pygame.sprite.Sprite):
     
@@ -82,7 +87,7 @@ class Mob(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(mob_img, (100, 80))
+        self.image = pygame.transform.scale(mob_img, (70, 80))
         
 #        # Deixando transparente.
 #        self.image.set_colorkey(BLACK)
@@ -207,6 +212,40 @@ def load_assets(img_dir):
 #    assets["explosion_anim"] = explosion_anim
 #    assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
     return assets
+
+def init_screen(screen):
+    # Variável para o ajuste de velocidade
+    clock = pygame.time.Clock()
+
+    # Carrega o fundo da tela inicial
+    background = pygame.image.load(path.join(img_dir, 'inicio.png')).convert()
+    background_rect = background.get_rect()
+
+    running = True
+    while running:
+        
+        # Ajusta a velocidade do jogo.
+        clock.tick(FPS)
+        
+        # Processa os eventos (mouse, teclado, botão, etc).
+        for event in pygame.event.get():
+            # Verifica se foi fechado.
+            if event.type == pygame.QUIT:
+                state = QUIT
+                running = False
+
+            if event.type == pygame.KEYUP:
+                state = GAME
+                running = False
+                    
+        # A cada loop, redesenha o fundo e os sprites
+        screen.fill(BLACK)
+        screen.blit(background, background_rect)
+
+        # Depois de desenhar tudo, inverte o display.
+        pygame.display.flip()
+
+    return state
 
 def game_screen(screen):
     # Carrega todos os assets uma vez só e guarda em um dicionário
@@ -359,6 +398,7 @@ def game_screen(screen):
         
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
+    return QUIT
 
 # Inicialização do Pygame.
 pygame.init()
@@ -372,7 +412,14 @@ pygame.display.set_caption("Pitfall")
 
 # Comando para evitar travamentos.
 try:
-    game_screen(screen)
+    state = INIT
+    while state != QUIT:
+        if state == INIT:
+            state = init_screen(screen)
+        elif state == GAME:
+            state = game_screen(screen)
+        else:
+            state = QUIT
 finally:
     pygame.quit()
 
