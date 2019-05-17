@@ -231,6 +231,7 @@ class HOLE(pygame.sprite.Sprite):
 def load_assets(img_dir):
     assets = {}
     assets["player_img"] = pygame.image.load(path.join(img_dir, "boneco pulando.png")).convert()
+    assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
 #    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
@@ -400,6 +401,8 @@ def game_screen(screen):
 #                # Toca o som da colisão
 #                boom_sound.play()
                 player.kill()
+                background = assets["game_over"]
+                background_rect = background.get_rect()
 #                lives -= 1
 #                explosao = Explosion(player.rect.center, assets["boneco_anim"])
 #                all_sprites.add(explosao)
@@ -460,4 +463,3 @@ try:
             state = QUIT
 finally:
     pygame.quit()
-
