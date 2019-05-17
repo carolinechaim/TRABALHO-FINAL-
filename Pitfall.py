@@ -48,7 +48,7 @@ class Player(pygame.sprite.Sprite):
         
         # Centraliza embaixo da tela.
         self.rect.centerx = WIDTH - 800
-        self.rect.bottom = HEIGHT - 10
+        self.rect.bottom = HEIGHT - 300 
         
         # Velocidade da nave
         self.speedx = 0
@@ -68,11 +68,11 @@ class Player(pygame.sprite.Sprite):
         if self.rect.left <= 0:
             self.rect.left = 0
         if self.rect.bottom <= 137:
-            self.rect.bottom = 137
+            self.speedy = 10
         if self.rect.bottom >= 635:
             self.rect.bottom = 635
         if self.rect.bottom <= 589:
-            self.rect.bottom = 580
+            self.speedy = 10
                     
 # Classe Mob que representa os meteoros
 class Mob(pygame.sprite.Sprite):
@@ -197,6 +197,7 @@ def load_assets(img_dir):
     assets = {}
     assets["player_img"] = pygame.image.load(path.join(img_dir, "boneco pulando.png")).convert()
     assets["mob_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
+    assets ["background_init"] = pygame.image.load(path.join(img_dir, 'inicio.png')).convert()
 #    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
 #    assets["boom_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl3.wav'))
@@ -214,12 +215,14 @@ def load_assets(img_dir):
     return assets
 
 def init_screen(screen):
+    # Carrega todos os assets uma vez só e guarda em um dicionário
+    assets = load_assets(img_dir)
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
-    background = pygame.image.load(path.join(img_dir, 'inicio.png')).convert()
-    background_rect = background.get_rect()
+    background_init = assets["background_init"]
+    background_rect = background_init.get_rect()
 
     running = True
     while running:
@@ -240,7 +243,7 @@ def init_screen(screen):
                     
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
-        screen.blit(background, background_rect)
+        screen.blit(background_init, background_rect)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
