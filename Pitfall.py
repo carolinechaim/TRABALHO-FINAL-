@@ -67,18 +67,21 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = WIDTH
         if self.rect.left <= 0:
             self.rect.left = 0
+            
+            
+            
         if self.rect.bottom <= 137:
             self.speedy = 10
         if self.rect.bottom >= 635:
             self.rect.bottom = 635
-        if self.rect.bottom <= 589:
+        if self.rect.bottom <= 500:
             self.speedy = 10
                     
 # Classe Mob que representa os meteoros
-class Mob(pygame.sprite.Sprite):
+class HOLE(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, mob_img):
+    def __init__(self, hole_img):
         
         x = random.randint(500,1000)
         y = 710
@@ -87,7 +90,7 @@ class Mob(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(mob_img, (70, 80))
+        self.image = pygame.transform.scale(hole_img, (70, 80))
         
 #        # Deixando transparente.
 #        self.image.set_colorkey(BLACK)
@@ -109,7 +112,7 @@ class Mob(pygame.sprite.Sprite):
     # Metodo que atualiza a posição do meteoro
     def update(self):
         
-        False
+        pass
             
 ## Classe Bullet que representa os tiros
 #class Bullet(pygame.sprite.Sprite):
@@ -196,7 +199,7 @@ class Mob(pygame.sprite.Sprite):
 def load_assets(img_dir):
     assets = {}
     assets["player_img"] = pygame.image.load(path.join(img_dir, "boneco pulando.png")).convert()
-    assets["mob_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
+    assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'inicio.png')).convert()
 #    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
@@ -286,7 +289,7 @@ def game_screen(screen):
 
     # Cria 2 meteoros e adiciona no grupo meteoros
     for i in range(2):
-        m = Mob(assets["mob_img"])
+        m = Mob(assets["hole_img"])
         all_sprites.add(m)
         mobs.add(m)
 
