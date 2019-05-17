@@ -223,6 +223,30 @@ def init_screen(screen):
     # Carrega o fundo da tela inicial
     background_init = assets["background_init"]
     background_rect = background_init.get_rect()
+        
+#        def __init__(self,player_img):
+#        
+#        # Construtor da classe pai (Sprite).
+#        pygame.sprite.Sprite.__init__(self)
+#        
+#        self.image =pygame.transform.scale(player_img, (60, 103))
+#        
+#        
+#        # Detalhes sobre o posicionamento.
+#        self.rect = self.image.get_rect()
+#        
+#        self.image.set_colorkey(BLACK)
+#        
+#        # Centraliza embaixo da tela.
+#        self.rect.centerx = WIDTH - 800
+#        self.rect.bottom = HEIGHT - 300 
+#        
+#        # Velocidade da nave
+#        self.speedx = 0
+#        self.speedy= 0
+#        
+#        # Melhora a colisão estabelecendo um raio de um circulo
+#        self.radius = 25
 
     running = True
     while running:
