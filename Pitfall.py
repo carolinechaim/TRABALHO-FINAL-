@@ -41,13 +41,13 @@ class Player(pygame.sprite.Sprite):
         
         self.images = player_img
         self.currentimg = 0
-        self.image = pygame.transform.scale(self.images[self.currentimg], (400, 300))
+        self.image = pygame.transform.scale(self.images[self.currentimg], (60, 103))
         
         
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
         
-        self.image.set_colorkey(YELLOW)
+
         
         # Centraliza embaixo da tela.
         self.rect.centerx = WIDTH - 800
@@ -64,7 +64,7 @@ class Player(pygame.sprite.Sprite):
         self.last_update = pygame.time.get_ticks()
 
         # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
-        self.frame_ticks = 100
+        self.frame_ticks = 75
     
     # Metodo que atualiza a posição da navinha
     def update(self):
@@ -144,93 +144,58 @@ class HOLE(pygame.sprite.Sprite):
     def update(self):
         
         pass
+    
+class Back(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self,back_img):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        
+        self.images = back_img
+        self.currentimg = 0
+        self.image = pygame.transform.scale(self.images[self.currentimg], (1000, 700))
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
 
-            
-## Classe Bullet que representa os tiros
-#class Bullet(pygame.sprite.Sprite):
-#    
-#    # Construtor da classe.
-#    def __init__(self, x, y, bullet_img):
-#        
-#        # Construtor da classe pai (Sprite).
-#        pygame.sprite.Sprite.__init__(self)
-#        
-#        # Carregando a imagem de fundo.
-#        self.image = bullet_img
-#        
-#        # Deixando transparente.
-#        self.image.set_colorkey(BLACK)
-#        
-#        # Detalhes sobre o posicionamento.
-#        self.rect = self.image.get_rect()
-#        
-#        # Coloca no lugar inicial definido em x, y do constutor
-#        self.rect.bottom = y
-#        self.rect.centerx = x
-#        self.speedy = -10
-#
-#    # Metodo que atualiza a posição da navinha
-#    def update(self):
-#        self.rect.y += self.speedy
-#        
-#        # Se o tiro passar do inicio da tela, morre.
-#        if self.rect.bottom < 0:
-#            self.kill()
-#
-## Classe que representa uma explosão de meteoro
-#class Explosion(pygame.sprite.Sprite):
-#
-#    # Construtor da classe.
-#    def __init__(self, center, boneco_anim):
-#        # Construtor da classe pai (Sprite).
-#        pygame.sprite.Sprite.__init__(self)
-#
-#        # Carrega a animação de explosão
-#        self.boneco_anim = boneco_anim
-#
-#        # Inicia o processo de animação colocando a primeira imagem na tela.
-#        self.frame = 0
-#        self.image = self.boneco_anim[self.frame]
-#        self.rect = self.image.get_rect()
-#        self.rect.center = center
-#
-#        # Guarda o tick da primeira imagem
-#        self.last_update = pygame.time.get_ticks()
-#
-#        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
-#        self.frame_ticks = 50
-#
-#    def update(self):
-#        # Verifica o tick atual.
-#        now = pygame.time.get_ticks()
-#
-#        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
-#        elapsed_ticks = now - self.last_update
-#
-#        # Se já está na hora de mudar de imagem...
-#        if elapsed_ticks > self.frame_ticks:
-#
-#            # Marca o tick da nova imagem.
-#            self.last_update = now
-#
-#            # Avança um quadro.
-#            self.frame += 1
-#
-#            # Verifica se já chegou no final da animação.
-#            if self.frame == len(self.boneco_anim):
-#                # Se sim, tchau explosão!
-#                self.kill()
-#            else:
-#                # Se ainda não chegou ao fim da explosão, troca de imagem.
-#                center = self.rect.center
-#                self.image = self.boneco_anim[self.frame]
-#                self.rect = self.image.get_rect()
-#                self.rect.center = center
+        
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 350
+    
+    # Metodo que atualiza a posição da navinha
+    def update(self):
+        
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.currentimg += 1
+
+            # Verifica se já chegou no final da animação.
+            if self.currentimg == len(self.images):
+                # Se sim, tchau explosão!
+                self.currentimg=0
+            self.image = self.images[self.currentimg]
+
+
 
 # Carrega todos os assets uma vez só.
 def load_assets(img_dir):
     assets = {}
-    assets["player_img"] = pygame.image.load(path.join(img_dir, "boneco pulando.png")).convert()
     assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
@@ -239,13 +204,21 @@ def load_assets(img_dir):
 #    assets["boom_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl3.wav'))
 #    assets["destroy_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl6.wav'))
 #    assets["pew_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+    back_anim = []
+    for i in range (2):
+        filename = 'imagem {}.jpeg'.format(i)
+        img1 = pygame.image.load(path.join(img_dir,filename)).convert()
+        img1 = pygame.transform.scale(img1, (1000, 700))
+        back_anim.append(img1)
+    assets["back_anim"]=back_anim
+        
     boneco_anim = []
-    for i in range(15):
-        filename = 'frame_{}.png'.format(i)
-        img = pygame.image.load(path.join(img_dir, filename)).convert()
-        img = pygame.transform.scale(img, (60, 103))        
-        img.set_colorkey(BLACK)
-        boneco_anim.append(img)
+    for i in range(5):
+        filename = 'boneco_{}.png'.format(i)
+        img0 = pygame.image.load(path.join(img_dir, filename)).convert()
+        img0 = pygame.transform.scale(img0, (60, 103))        
+        img0.set_colorkey(BLACK)
+        boneco_anim.append(img0)
     assets["boneco_anim"] = boneco_anim
 #    assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
     return assets
@@ -257,8 +230,11 @@ def init_screen(screen):
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
-    background_init = assets["background_init"]
-    background_rect = background_init.get_rect()
+    background_init = Back(assets["back_anim"])
+    
+    all_sprites = pygame.sprite.Group()
+
+    all_sprites.add(background_init)
         
     running = True
     while running:
@@ -276,10 +252,9 @@ def init_screen(screen):
             if event.type == pygame.KEYUP:
                 state = GAME
                 running = False
-                    
+        all_sprites.update()
         # A cada loop, redesenha o fundo e os sprites
-        screen.fill(BLACK)
-        screen.blit(background_init, background_rect)
+        all_sprites.draw(screen)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
@@ -397,7 +372,7 @@ def game_screen(screen):
             
             # Verifica se houve colisão entre nave e meteoro
             hits = pygame.sprite.spritecollide(player, mobs, True)
-           if hits:
+            if hits:
 #                # Toca o som da colisão
 #                boom_sound.play()
                 player.kill()
