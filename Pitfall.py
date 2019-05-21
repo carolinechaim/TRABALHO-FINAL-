@@ -177,7 +177,7 @@ class UNIC(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.bottom = y
         # Sorteia uma velocidade inicial
-        self.speedx = 100
+        self.speedx = -5
         self.speedy = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -185,8 +185,12 @@ class UNIC(pygame.sprite.Sprite):
         
     # Metodo que atualiza a posição do meteoro
     def update(self):
-        pass
-
+        
+        if self.rect.left <= 0:
+            self.rect.right = WIDTH
+        else:
+            self.rect.x += self.speedx
+            self.rect.y += self.speedy
 
 
 
@@ -443,7 +447,6 @@ def game_screen(screen):
 #                boom_sound.play()
           ##############################      player.kill()
                 lives -=1
-                print ("perdeu uma vida")
                 
             if lives <= 0:
                 player.kill()
