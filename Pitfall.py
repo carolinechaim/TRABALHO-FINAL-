@@ -306,8 +306,42 @@ class Back(pygame.sprite.Sprite):
                 self.currentimg=0
             self.image = self.images[self.currentimg]
 
-
-
+#class Botton(pygame.sprite.Sprite):
+#    
+#    # Construtor da classe.
+#    def __init__(self, botao_sim,x):
+#
+#        # Construtor da classe pai (Sprite).
+#        pygame.sprite.Sprite.__init__(self)
+#        
+#        # Diminuindo o tamanho da imagem.
+#        self.image = pygame.transform.scale(botao_sim, (70, 80))
+#       
+#        
+##        # Deixando transparente.
+#        self.image.set_colorkey(WHITE)
+#        
+#        # Detalhes sobre o posicionamento.
+#        self.rect = self.image.get_rect()
+#        
+#        # Sorteia um lugar inicial em x
+#        self.rect.left = x
+#        # Sorteia um lugar inicial em y
+#        self.rect.bottom = 710
+#
+#        # Sorteia uma velocidade inicial
+#        self.speedx = 0
+#        self.speedy = 0
+#        
+#        # Melhora a colisão estabelecendo um raio de um circulo
+#        self.radius = int(self.rect.width * .85 / 2)
+#        
+#    # Metodo que atualiza a posição do meteoro
+#    def update(self):        
+#        # Se o tiro passar do inicio da tela, morre.
+##        if self.rect.bottom < 0:
+#            #self.kill()
+#        pass
 # Carrega todos os assets uma vez só.
 def load_assets(img_dir):
     assets = {}
@@ -315,6 +349,7 @@ def load_assets(img_dir):
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
     assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
+#    assets["botao_sim"]=pygame.image.load(path.join(img_dir, 'yes.png')).convert()
 #    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
     
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
@@ -537,7 +572,7 @@ def game_screen(screen):
 
             if lives <= 0:
                 player.kill()
-#                state = DONE
+#               state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
 #                explosao = Explosion(player.rect.center, assets["explosion_anim"])
