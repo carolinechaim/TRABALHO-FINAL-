@@ -236,10 +236,10 @@ class LIVES(pygame.sprite.Sprite):
        
         
 #        # Deixando transparente.
-        self.image.set_colorkey(WHITE)
+        self.image.set_colorkey(BLACK)
         
         # Detalhes sobre o posicionamento.
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect() 
         
         # Sorteia um lugar inicial em x
         self.rect.left = x
@@ -374,7 +374,7 @@ class Back(pygame.sprite.Sprite):
 
         # Se já está na hora de mudar de imagem...
         if elapsed_ticks > self.frame_ticks:
-
+ 
             # Marca o tick da nova imagem.
             self.last_update = now
 
@@ -503,6 +503,7 @@ def game_screen(screen):
 
     mobs1 = pygame.sprite.Group()
     mobs2 = pygame.sprite.Group()
+    mobs3 = pygame.sprite.Group()
     life = pygame.sprite.Group()
 #    # Cria um grupo para tiros
 #    bullets = pygame.sprite.Group()
@@ -520,7 +521,7 @@ def game_screen(screen):
     
     b = UNIC(assets["bar_anim"])
     all_sprites.add(b)
-    mobs.add(b)
+    mobs3.add(b)
     # Loop principal.
 #    pygame.mixer.music.play(loops=-1)
 
