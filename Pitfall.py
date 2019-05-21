@@ -358,8 +358,8 @@ def game_screen(screen):
     all_sprites.add(player)
 
     # Cria um grupo só dos meteoros
-    mobs = pygame.sprite.Group()
-
+    mobs1 = pygame.sprite.Group()
+    mobs2 = pygame.sprite.Group()
 #    # Cria um grupo para tiros
 #    bullets = pygame.sprite.Group()
 
@@ -367,10 +367,11 @@ def game_screen(screen):
     for i in range(2):
         m = HOLE(assets["hole_img"])
         all_sprites.add(m)
-        mobs.add(m)
+        mobs1.add(m)
+        
     u = UNIC(assets["unic_img"])
     all_sprites.add(u)
-    mobs.add(u)
+    mobs2.add(u)
     # Loop principal.
 #    pygame.mixer.music.play(loops=-1)
 
@@ -425,13 +426,7 @@ def game_screen(screen):
         
         if state == PLAYING:
 ##            # Verifica se houve colisão entre tiro e meteoro
-##            hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
-##            for hit in hits: # Pode haver mais de um
-##                # O meteoro e destruido e precisa ser recriado
-##                destroy_sound.play()
-##                m = Mob(assets["mob_img"]) 
-##                all_sprites.add(m)
-##                mobs.add(m)
+##            
 ##
 ##                # No lugar do meteoro antigo, adicionar uma explosão.
 ##                explosao = Explosion(hit.rect.center, assets["boneco_anim"])
@@ -441,13 +436,24 @@ def game_screen(screen):
 #                score += 100
             
             # Verifica se houve colisão entre nave e meteoro
-            hits  = pygame.sprite.spritecollide(player, mobs, True)
+            hits  = pygame.sprite.spritecollide(player, mobs1, True)
             if hits:
-#                # Toca o som da colisão
-#                boom_sound.play()
-          ##############################      player.kill()
                 lives -=1
-                
+                for i in range(2):
+                    m = HOLE(assets["hole_img"])
+                    all_sprites.add(m)
+                    mobs1.add(m)
+    
+    
+    
+    
+            hits  = pygame.sprite.spritecollide(player, mobs2, True)
+            if hits:
+                lives -=1
+                u = UNIC(assets["unic_img"])
+                all_sprites.add(u)
+                mobs2.add(u)  
+                    
             if lives <= 0:
                 player.kill()
                 state = DONE
