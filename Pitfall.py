@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Importando as bibliotecas necessárias.
+# Importando as bibliotecas necessÃ¡rias.
 import pygame
 import random
 import time
@@ -16,7 +16,7 @@ WIDTH = 1000 # Largura da tela
 HEIGHT = 700 # Altura da tela
 FPS = 60 # Frames por segundo
 
-# Define algumas variáveis com as cores básicas
+# Define algumas variÃ¡veis com as cores bÃ¡sicas
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -24,7 +24,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
-# Estados para controle do fluxo da aplicação
+# Estados para controle do fluxo da aplicaÃ§Ã£o
 INIT = 0
 GAME = 1
 QUIT = 2
@@ -57,16 +57,16 @@ class Player(pygame.sprite.Sprite):
         self.speedx = 0
         self.speedy= 0
         
-        # Melhora a colisão estabelecendo um raio de um circulo
+        # Melhora a colisÃ£o estabelecendo um raio de um circulo
         self.radius = 25
         
         # Guarda o tick da primeira imagem
         self.last_update = pygame.time.get_ticks()
 
-        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        # Controle de ticks de animaÃ§Ã£o: troca de imagem a cada self.frame_ticks milissegundos.
         self.frame_ticks = 75
     
-    # Metodo que atualiza a posição da navinha
+    # Metodo que atualiza a posiÃ§Ã£o da navinha
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
@@ -88,21 +88,21 @@ class Player(pygame.sprite.Sprite):
             
         now = pygame.time.get_ticks()
 
-        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        # Verifica quantos ticks se passaram desde a ultima mudanÃ§a de frame.
         elapsed_ticks = now - self.last_update
 
-        # Se já está na hora de mudar de imagem...
+        # Se jÃ¡ estÃ¡ na hora de mudar de imagem...
         if elapsed_ticks > self.frame_ticks:
 
             # Marca o tick da nova imagem.
             self.last_update = now
 
-            # Avança um quadro.
+            # AvanÃ§a um quadro.
             self.currentimg += 1
 
-            # Verifica se já chegou no final da animação.
+            # Verifica se jÃ¡ chegou no final da animaÃ§Ã£o.
             if self.currentimg == len(self.images):
-                # Se sim, tchau explosão!
+                # Se sim, tchau explosÃ£o!
                 self.currentimg=0
             self.image = self.images[self.currentimg]
 
@@ -137,10 +137,10 @@ class HOLE(pygame.sprite.Sprite):
         self.speedx = 0
         self.speedy = 0
         
-        # Melhora a colisão estabelecendo um raio de um circulo
+        # Melhora a colisÃ£o estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .85 / 2)
         
-    # Metodo que atualiza a posição do meteoro
+    # Metodo que atualiza a posiÃ§Ã£o do meteoro
     def update(self):
         
         pass
@@ -181,16 +181,16 @@ class UNIC(pygame.sprite.Sprite):
         self.speedx = -5
         self.speedy = 0
         
-        # Melhora a colisão estabelecendo um raio de um circulo
+        # Melhora a colisÃ£o estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .65 / 2)
     
         # Guarda o tick da primeira imagem
         self.last_update = pygame.time.get_ticks()
 
-        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        # Controle de ticks de animaÃ§Ã£o: troca de imagem a cada self.frame_ticks milissegundos.
         self.frame_ticks = 75
         
-    # Metodo que atualiza a posição do meteoro
+    # Metodo que atualiza a posiÃ§Ã£o do meteoro
     def update(self):
         
         if self.rect.left <= 0:
@@ -201,21 +201,21 @@ class UNIC(pygame.sprite.Sprite):
             
         now = pygame.time.get_ticks()
 
-        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        # Verifica quantos ticks se passaram desde a ultima mudanÃ§a de frame.
         elapsed_ticks = now - self.last_update
 
-        # Se já está na hora de mudar de imagem...
+        # Se jÃ¡ estÃ¡ na hora de mudar de imagem...
         if elapsed_ticks > self.frame_ticks:
 
             # Marca o tick da nova imagem.
             self.last_update = now
 
-            # Avança um quadro.
+            # AvanÃ§a um quadro.
             self.currentimg += 1
 
-            # Verifica se já chegou no final da animação.
+            # Verifica se jÃ¡ chegou no final da animaÃ§Ã£o.
             if self.currentimg == len(self.images):
-                # Se sim, tchau explosão!
+                # Se sim, tchau explosÃ£o!
                 self.currentimg=0
             self.image = self.images[self.currentimg]
 
@@ -244,20 +244,16 @@ class LIVES(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em x
         self.rect.left = x
         # Sorteia um lugar inicial em y
-<<<<<<< HEAD
-        self.rect.bottom = 635 + 40
-=======
         self.rect.bottom = 710
->>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
 
         # Sorteia uma velocidade inicial
         self.speedx = 0
         self.speedy = 0
         
-        # Melhora a colisão estabelecendo um raio de um circulo
+        # Melhora a colisÃ£o estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .85 / 2)
         
-    # Metodo que atualiza a posição do meteoro
+    # Metodo que atualiza a posiÃ§Ã£o do meteoro
     def update(self):        
         # Se o tiro passar do inicio da tela, morre.
 #        if self.rect.bottom < 0:
@@ -285,34 +281,34 @@ class Back(pygame.sprite.Sprite):
         # Guarda o tick da primeira imagem
         self.last_update = pygame.time.get_ticks()
 
-        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        # Controle de ticks de animaÃ§Ã£o: troca de imagem a cada self.frame_ticks milissegundos.
         self.frame_ticks = 350
     
-    # Metodo que atualiza a posição da navinha
+    # Metodo que atualiza a posiÃ§Ã£o da navinha
     def update(self):
         
         now = pygame.time.get_ticks()
 
-        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        # Verifica quantos ticks se passaram desde a ultima mudanÃ§a de frame.
         elapsed_ticks = now - self.last_update
 
-        # Se já está na hora de mudar de imagem...
+        # Se jÃ¡ estÃ¡ na hora de mudar de imagem...
         if elapsed_ticks > self.frame_ticks:
 
             # Marca o tick da nova imagem.
             self.last_update = now
 
-            # Avança um quadro.
+            # AvanÃ§a um quadro.
             self.currentimg += 1
-            # Verifica se já chegou no final da animação.
+            # Verifica se jÃ¡ chegou no final da animaÃ§Ã£o.
             if self.currentimg == len(self.images):
-                # Se sim, tchau explosão!
+                # Se sim, tchau explosÃ£o!
                 self.currentimg=0
             self.image = self.images[self.currentimg]
 
 
 
-# Carrega todos os assets uma vez só.
+# Carrega todos os assets uma vez sÃ³.
 def load_assets(img_dir):
     assets = {}
     assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
@@ -351,9 +347,9 @@ def load_assets(img_dir):
     return assets
 
 def init_screen(screen):
-    # Carrega todos os assets uma vez só e guarda em um dicionário
+    # Carrega todos os assets uma vez sÃ³ e guarda em um dicionÃ¡rio
     assets = load_assets(img_dir)
-    # Variável para o ajuste de velocidade
+    # VariÃ¡vel para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
@@ -369,7 +365,7 @@ def init_screen(screen):
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
         
-        # Processa os eventos (mouse, teclado, botão, etc).
+        # Processa os eventos (mouse, teclado, botÃ£o, etc).
         for event in pygame.event.get():
             # Verifica se foi fechado.
             if event.type == pygame.QUIT:
@@ -391,10 +387,10 @@ def init_screen(screen):
 
 
 def game_screen(screen):
-    # Carrega todos os assets uma vez só e guarda em um dicionário
+    # Carrega todos os assets uma vez sÃ³ e guarda em um dicionÃ¡rio
     assets = load_assets(img_dir)
 
-    # Variável para o ajuste de velocidade
+    # VariÃ¡vel para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega o fundo do jogo
@@ -409,7 +405,7 @@ def game_screen(screen):
 #    destroy_sound = assets["destroy_sound"]
 #    pew_sound = assets["pew_sound"]
 
-    # Cria uma nave. O construtor será chamado automaticamente.
+    # Cria uma nave. O construtor serÃ¡ chamado automaticamente.
     player = Player(assets["boneco_anim"])
 
 #    # Carrega a fonte para desenhar o score.
@@ -419,7 +415,7 @@ def game_screen(screen):
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
 
-    # Cria um grupo só dos meteoros
+    # Cria um grupo sÃ³ dos meteoros
 
     mobs1 = pygame.sprite.Group()
     mobs2 = pygame.sprite.Group()
@@ -450,19 +446,12 @@ def game_screen(screen):
     DONE = 2
     x = 00
     for i in  range(lives):
-<<<<<<< HEAD
-        l = LIVES(assets["lives_img"],x)
-        all_sprites.add(l)
-        life.add(l)
-        x+=40
-=======
             
             l = LIVES(assets["lives_img"],x)
             all_sprites.add(l)
             life.add(l)
             x+=70
 
->>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
             
     state = PLAYING
     while state != DONE:
@@ -471,7 +460,7 @@ def game_screen(screen):
         clock.tick(FPS)
         
         if state == PLAYING:
-            # Processa os eventos (mouse, teclado, botão, etc).
+            # Processa os eventos (mouse, teclado, botÃ£o, etc).
             for event in pygame.event.get():
                 
                 # Verifica se foi fechado.
@@ -485,7 +474,7 @@ def game_screen(screen):
                         player.speedx = -8
                     if event.key == pygame.K_RIGHT:
                         player.speedx = 8
-#                     Se for um espaço atira!
+#                     Se for um espaÃ§o atira!
                     if event.key == pygame.K_SPACE:
                         player.speedy =-10
                     
@@ -506,7 +495,7 @@ def game_screen(screen):
         all_sprites.update()
         
         if state == PLAYING:
-##            # Verifica se houve colisão entre tiro e meteoro
+##            # Verifica se houve colisÃ£o entre tiro e meteoro
 ##            hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
 ##            for hit in hits: # Pode haver mais de um
 ##                # O meteoro e destruido e precisa ser recriado
@@ -515,13 +504,13 @@ def game_screen(screen):
 ##                all_sprites.add(m)
 ##                mobs.add(m)
 ##
-##                # No lugar do meteoro antigo, adicionar uma explosão.
+##                # No lugar do meteoro antigo, adicionar uma explosÃ£o.
 ##                explosao = Explosion(hit.rect.center, assets["boneco_anim"])
 ##                all_sprites.add(explosao)
 ##
 ##                # Ganhou pontos!
 #                  
-            # Verifica se houve colisão entre nave e meteoro
+            # Verifica se houve colisÃ£o entre nave e meteoro
             b = 0 
             vida = LIVES(assets["lives_img"],b )
             hits1  = pygame.sprite.spritecollide(player, mobs1, True)
@@ -529,12 +518,8 @@ def game_screen(screen):
             if hits1:
                 player.rect.left = 100 
                 lives -=1
-<<<<<<< HEAD
-                all_sprites.remove(vida)
-=======
                 vida.kill()
 
->>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
                 if lives >0:
                     m = HOLE(assets["hole_img"])
                     all_sprites.add(m)
@@ -542,25 +527,17 @@ def game_screen(screen):
             if hits2:
                 player.rect.left = 100
                 lives -=1
-<<<<<<< HEAD
-                all_sprites.remove(vida) 
-=======
                 vida.kill() 
->>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
                 if lives >0:
                     u = UNIC(assets["uni_anim"])
                     all_sprites.add(u)
                     mobs2.add(u)
                 
                 
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
             if lives <= 0:
                 player.kill()
-#                state = DONE
+#               state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
 #                explosao = Explosion(player.rect.center, assets["explosion_anim"])
@@ -606,7 +583,7 @@ def game_screen(screen):
         pygame.display.flip()
     return QUIT
 
-# Inicialização do Pygame.
+# InicializaÃ§Ã£o do Pygame.
 pygame.init()
 pygame.mixer.init()
 
