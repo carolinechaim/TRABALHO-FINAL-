@@ -223,8 +223,41 @@ class UNIC(pygame.sprite.Sprite):
 
 
 
-
-
+class LIVES(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self, lives_img,x,y):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(lives_img, (70, 80))
+       
+        
+#        # Deixando transparente.
+        self.image.set_colorkey(WHITE)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.left = x
+        # Sorteia um lugar inicial em y
+        self.rect.bottom = y
+        # Sorteia uma velocidade inicial
+        self.speedx = 0
+        self.speedy = 0
+        
+        # Melhora a colisão estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .85 / 2)
+        
+    # Metodo que atualiza a posição do meteoro
+    def update(self):        
+        # Se o tiro passar do inicio da tela, morre.
+#        if self.rect.bottom < 0:
+            #self.kill()
+        pass
 
 
 
@@ -291,7 +324,7 @@ def load_assets(img_dir):
     assets = {}
     assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
-
+    assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
 #    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
     
@@ -392,7 +425,7 @@ def game_screen(screen):
 
     # Cria um grupo só dos meteoros
     mobs = pygame.sprite.Group()
-
+    life = pygame.sprite.Group()
 #    # Cria um grupo para tiros
 #    bullets = pygame.sprite.Group()
 
@@ -405,6 +438,7 @@ def game_screen(screen):
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
     mobs.add(u)
+    
     # Loop principal.
 #    pygame.mixer.music.play(loops=-1)
 
@@ -412,10 +446,18 @@ def game_screen(screen):
 
     lives = 3
 
-    PLAYING = 0
+    PLAYING =  0
     EXPLODING = 1
     DONE = 2
-
+    x = 00
+    for i in  range(lives):
+            
+            
+            l = LIVES(assets["lives_img"],x,710)
+            all_sprites.add(l)
+            life.add(l)
+            x+=70
+            
     state = PLAYING
     while state != DONE:
         
@@ -475,13 +517,14 @@ def game_screen(screen):
 #                score += 100
             
             # Verifica se houve colisão entre nave e meteoro
+            vida = HOLE(assets["lives_img"])
             hits  = pygame.sprite.spritecollide(player, mobs, True)
             if hits:
 #                # Toca o som da colisão
 #                boom_sound.play()
           ##############################      player.kill()
                 lives -=1
-                
+                vida.kill()
             if lives <= 0:
                 player.kill()
                 state = DONE
