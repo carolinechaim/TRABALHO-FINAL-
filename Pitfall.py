@@ -277,7 +277,6 @@ class Back(pygame.sprite.Sprite):
 
             # Avança um quadro.
             self.currentimg += 1
-
             # Verifica se já chegou no final da animação.
             if self.currentimg == len(self.images):
                 # Se sim, tchau explosão!
