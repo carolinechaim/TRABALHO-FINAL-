@@ -260,17 +260,6 @@ class LIVES(pygame.sprite.Sprite):
             #self.kill()
         pass
 
-
-
-
-
-
-
-
-
-
-
-
     
 class Back(pygame.sprite.Sprite):
     
@@ -394,6 +383,8 @@ def init_screen(screen):
         pygame.display.flip()
 
     return state
+
+
 
 def game_screen(screen):
     # Carrega todos os assets uma vez só e guarda em um dicionário
@@ -546,7 +537,7 @@ def game_screen(screen):
 
             if lives <= 0:
                 player.kill()
-                state = DONE
+#                state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
 #                explosao = Explosion(player.rect.center, assets["explosion_anim"])
