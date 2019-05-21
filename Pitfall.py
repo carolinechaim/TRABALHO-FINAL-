@@ -73,7 +73,7 @@ class Player(pygame.sprite.Sprite):
         
         # Mantem dentro da tela
         if self.rect.right >= WIDTH:
-            self.rect.right = WIDTH
+            self.rect.right = 60
         if self.rect.left <= 0:
             self.rect.left = 0
             
@@ -226,7 +226,7 @@ class UNIC(pygame.sprite.Sprite):
 class LIVES(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, lives_img,x,y):
+    def __init__(self, lives_img,x):
         
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -244,7 +244,7 @@ class LIVES(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em x
         self.rect.left = x
         # Sorteia um lugar inicial em y
-        self.rect.bottom = y
+        self.rect.bottom = 710
         # Sorteia uma velocidade inicial
         self.speedx = 0
         self.speedy = 0
@@ -424,7 +424,8 @@ def game_screen(screen):
     all_sprites.add(player)
 
     # Cria um grupo só dos meteoros
-    mobs = pygame.sprite.Group()
+    mobs1 = pygame.sprite.Group()
+    mobs2 = pygame.sprite.Group()
     life = pygame.sprite.Group()
 #    # Cria um grupo para tiros
 #    bullets = pygame.sprite.Group()
@@ -433,11 +434,11 @@ def game_screen(screen):
     for i in range(2):
         m = HOLE(assets["hole_img"])
         all_sprites.add(m)
-        mobs.add(m)
+        mobs1.add(m)
         
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
-    mobs.add(u)
+    mobs2.add(u)
     
     # Loop principal.
 #    pygame.mixer.music.play(loops=-1)
@@ -453,7 +454,7 @@ def game_screen(screen):
     for i in  range(lives):
             
             
-            l = LIVES(assets["lives_img"],x,710)
+            l = LIVES(assets["lives_img"],x)
             all_sprites.add(l)
             life.add(l)
             x+=70
@@ -493,7 +494,7 @@ def game_screen(screen):
                     if event.key == pygame.K_RIGHT:
                         player.speedx = 0
                     if event.key == pygame.K_SPACE:
-                        player.speedy = 10
+                        player.speedy =200
                     
         # Depois de processar os eventos.
         # Atualiza a acao de cada sprite.
@@ -514,17 +515,28 @@ def game_screen(screen):
 ##                all_sprites.add(explosao)
 ##
 ##                # Ganhou pontos!
-#                score += 100
-            
+#                  
             # Verifica se houve colisão entre nave e meteoro
-            vida = HOLE(assets["lives_img"])
-            hits  = pygame.sprite.spritecollide(player, mobs, True)
-            if hits:
-#                # Toca o som da colisão
-#                boom_sound.play()
-          ##############################      player.kill()
+            b = 0 
+            vida = LIVES(assets["lives_img"],b )
+            hits1  = pygame.sprite.spritecollide(player, mobs1, True)
+            hits2  = pygame.sprite.spritecollide(player, mobs2, True)
+            if hits1:
+                player.rect.left = 100 
                 lives -=1
-                vida.kill()
+                vida.kill() 
+                m = HOLE(assets["hole_img"])
+                all_sprites.add(m)
+                mobs1.add(m)
+            if hits2:
+                player.rect.left = 100
+                lives -=1
+                vida.kill() 
+                u = UNIC(assets["uni_anim"])
+                all_sprites.add(u)
+                mobs2.add(u)
+                
+                
             if lives <= 0:
                 player.kill()
                 state = DONE
