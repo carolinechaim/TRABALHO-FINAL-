@@ -258,8 +258,77 @@ class LIVES(pygame.sprite.Sprite):
 #        if self.rect.bottom < 0:
             #self.kill()
         pass
+    
+    
+    
 
+class BARRIL(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self, bar_anim):
+        
+        x =  1000
+        y = random.randint(500, 635) 
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        self.images = bar_anim
+        self.currentimg = 0
+        self.image = pygame.transform.scale(self.images[self.currentimg], (60, 103))
+        
+##        # Deixando transparente.
+#        self.image.set_colorkey(BLACK)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.centerx = x
+        # Sorteia um lugar inicial em y
+        self.rect.bottom = y
+        # Sorteia uma velocidade inicial
+        self.speedx = -5
+        self.speedy = 0
+        
+        # Melhora a colisão estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .85 / 2)
+    
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
 
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 75
+        
+    # Metodo que atualiza a posição do meteoro
+    def update(self):
+        
+        if self.rect.left <= 0:
+            self.rect.right = WIDTH
+        else:
+            self.rect.x += self.speedx
+            self.rect.y += self.speedy
+            
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+        self.image.set_colorkey(BLACK)
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.currentimg += 1
+
+            # Verifica se já chegou no final da animação.
+            if self.currentimg == len(self.images):
+                # Se sim, tchau explosão!
+                self.currentimg=0
+            self.image = self.images[self.currentimg]
 
 
 
@@ -325,9 +394,16 @@ def load_assets(img_dir):
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
     assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
-#    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
-    
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
+    
+    bar_anim=[]
+    for i in range(4):
+        filename ='barril_{}.png'.format(i)
+        img3 = pygame.image.load(path.join(img_dir,filename)).convert()
+        img3 = pygame.transform.scale(img3, (50, 45))
+        bar_anim.append(img3)
+    assets["bar_anim"]=bar_anim
+    
     
     uni_anim = []
     for i in range (10):
@@ -438,6 +514,9 @@ def game_screen(screen):
     all_sprites.add(u)
     mobs.add(u)
     
+    b = UNIC(assets["bar_anim"])
+    all_sprites.add(b)
+    mobs.add(b)
     # Loop principal.
 #    pygame.mixer.music.play(loops=-1)
 
