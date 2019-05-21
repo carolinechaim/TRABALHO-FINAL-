@@ -155,7 +155,7 @@ class HOLE(pygame.sprite.Sprite):
 class UNIC(pygame.sprite.Sprite):
     
     # Construtor da classe.
-    def __init__(self, unic_img):
+    def __init__(self, uni_anim):
         
         x =  1000
         y = random.randint(500, 635) 
@@ -163,8 +163,9 @@ class UNIC(pygame.sprite.Sprite):
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
         
-        # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(unic_img, (70, 80))
+        self.images = uni_anim
+        self.currentimg = 0
+        self.image = pygame.transform.scale(self.images[self.currentimg], (60, 103))
         
 #        # Deixando transparente.
 #        self.image.set_colorkey(BLACK)
@@ -182,6 +183,12 @@ class UNIC(pygame.sprite.Sprite):
         
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .85 / 2)
+    
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 75
         
     # Metodo que atualiza a posição do meteoro
     def update(self):
@@ -191,7 +198,26 @@ class UNIC(pygame.sprite.Sprite):
         else:
             self.rect.x += self.speedx
             self.rect.y += self.speedy
+            
+        now = pygame.time.get_ticks()
 
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.currentimg += 1
+
+            # Verifica se já chegou no final da animação.
+            if self.currentimg == len(self.images):
+                # Se sim, tchau explosão!
+                self.currentimg=0
+            self.image = self.images[self.currentimg]
 
 
 
@@ -265,13 +291,20 @@ def load_assets(img_dir):
     assets = {}
     assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
-    assets["unic_img"] = pygame.image.load(path.join(img_dir, "unicornio.png")).convert()
+
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
 #    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
+    
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
-#    assets["boom_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl3.wav'))
-#    assets["destroy_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'expl6.wav'))
-#    assets["pew_sound"] = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+    
+    uni_anim = []
+    for i in range (10):
+        filename = 'uni_{}.png'.format(i)
+        img2 = pygame.image.load(path.join(img_dir,filename)).convert()
+        img2 = pygame.transform.scale(img2, (80, 70))
+        uni_anim.append(img2)
+    assets["uni_anim"]=uni_anim
+    
     back_anim = []
     for i in range (2):
         filename = 'imagem {}.jpeg'.format(i)
@@ -368,7 +401,8 @@ def game_screen(screen):
         m = HOLE(assets["hole_img"])
         all_sprites.add(m)
         mobs.add(m)
-    u = UNIC(assets["unic_img"])
+        
+    u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
     mobs.add(u)
     # Loop principal.
