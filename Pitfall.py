@@ -114,7 +114,7 @@ class HOLE(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, hole_img):
         
-        x = random.randint(500,1000)
+        x = random.randint(300,1000)
         y = 710
         
         # Construtor da classe pai (Sprite).
@@ -165,7 +165,7 @@ class UNIC(pygame.sprite.Sprite):
         
         self.images = uni_anim
         self.currentimg = 0
-        self.image = pygame.transform.scale(self.images[self.currentimg], (60, 103))
+        self.image = pygame.transform.scale(self.images[self.currentimg], (50 , 70))
         
 #        # Deixando transparente.
 #        self.image.set_colorkey(BLACK)
@@ -182,7 +182,7 @@ class UNIC(pygame.sprite.Sprite):
         self.speedy = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
-        self.radius = int(self.rect.width * .85 / 2)
+        self.radius = int(self.rect.width * .65 / 2)
     
         # Guarda o tick da primeira imagem
         self.last_update = pygame.time.get_ticks()
@@ -232,7 +232,7 @@ class LIVES(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(lives_img, (70, 80))
+        self.image = pygame.transform.scale(lives_img, (35, 40))
        
         
 #        # Deixando transparente.
@@ -244,7 +244,11 @@ class LIVES(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em x
         self.rect.left = x
         # Sorteia um lugar inicial em y
+<<<<<<< HEAD
+        self.rect.bottom = 635 + 40
+=======
         self.rect.bottom = 710
+>>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
 
         # Sorteia uma velocidade inicial
         self.speedx = 0
@@ -306,42 +310,8 @@ class Back(pygame.sprite.Sprite):
                 self.currentimg=0
             self.image = self.images[self.currentimg]
 
-#class Botton(pygame.sprite.Sprite):
-#    
-#    # Construtor da classe.
-#    def __init__(self, botao_sim,x):
-#
-#        # Construtor da classe pai (Sprite).
-#        pygame.sprite.Sprite.__init__(self)
-#        
-#        # Diminuindo o tamanho da imagem.
-#        self.image = pygame.transform.scale(botao_sim, (70, 80))
-#       
-#        
-##        # Deixando transparente.
-#        self.image.set_colorkey(WHITE)
-#        
-#        # Detalhes sobre o posicionamento.
-#        self.rect = self.image.get_rect()
-#        
-#        # Sorteia um lugar inicial em x
-#        self.rect.left = x
-#        # Sorteia um lugar inicial em y
-#        self.rect.bottom = 710
-#
-#        # Sorteia uma velocidade inicial
-#        self.speedx = 0
-#        self.speedy = 0
-#        
-#        # Melhora a colisão estabelecendo um raio de um circulo
-#        self.radius = int(self.rect.width * .85 / 2)
-#        
-#    # Metodo que atualiza a posição do meteoro
-#    def update(self):        
-#        # Se o tiro passar do inicio da tela, morre.
-##        if self.rect.bottom < 0:
-#            #self.kill()
-#        pass
+
+
 # Carrega todos os assets uma vez só.
 def load_assets(img_dir):
     assets = {}
@@ -349,7 +319,6 @@ def load_assets(img_dir):
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
     assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
-#    assets["botao_sim"]=pygame.image.load(path.join(img_dir, 'yes.png')).convert()
 #    assets["bullet_img"] = pygame.image.load(path.join(img_dir, "laserRed16.png")).convert()
     
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
@@ -459,10 +428,10 @@ def game_screen(screen):
 #    bullets = pygame.sprite.Group()
 
     # Cria 2 meteoros e adiciona no grupo meteoros
-    for i in range(2):
-        m = HOLE(assets["hole_img"])
-        all_sprites.add(m)
-        mobs1.add(m)
+
+    m = HOLE(assets["hole_img"])
+    all_sprites.add(m)
+    mobs1.add(m)
         
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
@@ -481,12 +450,19 @@ def game_screen(screen):
     DONE = 2
     x = 00
     for i in  range(lives):
+<<<<<<< HEAD
+        l = LIVES(assets["lives_img"],x)
+        all_sprites.add(l)
+        life.add(l)
+        x+=40
+=======
             
             l = LIVES(assets["lives_img"],x)
             all_sprites.add(l)
             life.add(l)
             x+=70
 
+>>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
             
     state = PLAYING
     while state != DONE:
@@ -553,8 +529,12 @@ def game_screen(screen):
             if hits1:
                 player.rect.left = 100 
                 lives -=1
+<<<<<<< HEAD
+                all_sprites.remove(vida)
+=======
                 vida.kill()
 
+>>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
                 if lives >0:
                     m = HOLE(assets["hole_img"])
                     all_sprites.add(m)
@@ -562,17 +542,25 @@ def game_screen(screen):
             if hits2:
                 player.rect.left = 100
                 lives -=1
+<<<<<<< HEAD
+                all_sprites.remove(vida) 
+=======
                 vida.kill() 
+>>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
                 if lives >0:
                     u = UNIC(assets["uni_anim"])
                     all_sprites.add(u)
                     mobs2.add(u)
                 
                 
+<<<<<<< HEAD
+ 
+=======
 
+>>>>>>> 5202e5abf92e3c0e2c7f21ee782fb63021f1aa08
             if lives <= 0:
                 player.kill()
-#               state = DONE
+#                state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
 #                explosao = Explosion(player.rect.center, assets["explosion_anim"])
