@@ -226,12 +226,8 @@ class UNIC(pygame.sprite.Sprite):
 class LIVES(pygame.sprite.Sprite):
     
     # Construtor da classe.
-<<<<<<< HEAD
     def __init__(self, lives_img,x):
-=======
-    def __init__(self, lives_img,x,y):
->>>>>>> 3ab0cfa97678a89d9557e6997aab260aaa3fb481
-        
+
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
         
@@ -248,11 +244,8 @@ class LIVES(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em x
         self.rect.left = x
         # Sorteia um lugar inicial em y
-<<<<<<< HEAD
         self.rect.bottom = 710
-=======
-        self.rect.bottom = y
->>>>>>> 3ab0cfa97678a89d9557e6997aab260aaa3fb481
+
         # Sorteia uma velocidade inicial
         self.speedx = 0
         self.speedy = 0
@@ -267,34 +260,7 @@ class LIVES(pygame.sprite.Sprite):
             #self.kill()
         pass
 
-class button():
-    def __init__(self, color, x,y,width,height, text=''):
-        self.color = color
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.text = text
 
-    def draw(self,win,outline=None):
-        #Call this method to draw the button on the screen
-        if outline:
-            pygame.draw.rect(win, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
-            
-        pygame.draw.rect(win, self.color, (self.x,self.y,self.width,self.height),0)
-        
-        if self.text != '':
-            font = pygame.font.SysFont('comicsans', 60)
-            text = font.render(self.text, 1, (0,0,0))
-            win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
-
-    def isOver(self, pos):
-        #Pos is the mouse position or a tuple of (x,y) coordinates
-        if pos[0] > self.x and pos[0] < self.x + self.width:
-            if pos[1] > self.y and pos[1] < self.y + self.height:
-                return True
-            
-        return False
 
 
 
@@ -439,7 +405,6 @@ def game_screen(screen):
     # Carrega o fundo do jogo
     background = assets["background"]
     background_rect = background.get_rect()
-    greenButton=button((0,255,0),150,255,250,100, 'continuar')
     
 #    # Carrega os sons do jogo
 #    pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
@@ -459,12 +424,9 @@ def game_screen(screen):
     all_sprites.add(player)
 
     # Cria um grupo só dos meteoros
-<<<<<<< HEAD
+
     mobs1 = pygame.sprite.Group()
     mobs2 = pygame.sprite.Group()
-=======
-    mobs = pygame.sprite.Group()
->>>>>>> 3ab0cfa97678a89d9557e6997aab260aaa3fb481
     life = pygame.sprite.Group()
 #    # Cria um grupo para tiros
 #    bullets = pygame.sprite.Group()
@@ -477,11 +439,8 @@ def game_screen(screen):
         
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
-<<<<<<< HEAD
     mobs2.add(u)
-=======
-    mobs.add(u)
->>>>>>> 3ab0cfa97678a89d9557e6997aab260aaa3fb481
+
     
     # Loop principal.
 #    pygame.mixer.music.play(loops=-1)
@@ -496,15 +455,10 @@ def game_screen(screen):
     x = 00
     for i in  range(lives):
             
-            
-<<<<<<< HEAD
-            l = LIVES(assets["lives_img"],x)
-=======
-            l = LIVES(assets["lives_img"],x,710)
->>>>>>> 3ab0cfa97678a89d9557e6997aab260aaa3fb481
-            all_sprites.add(l)
-            life.add(l)
-            x+=70
+        l = LIVES(assets["lives_img"],x)
+        all_sprites.add(l)
+        life.add(l)
+        x+=70
             
     state = PLAYING
     while state != DONE:
@@ -564,7 +518,6 @@ def game_screen(screen):
 ##                # Ganhou pontos!
 #                  
             # Verifica se houve colisão entre nave e meteoro
-<<<<<<< HEAD
             b = 0 
             vida = LIVES(assets["lives_img"],b )
             hits1  = pygame.sprite.spritecollide(player, mobs1, True)
@@ -572,35 +525,27 @@ def game_screen(screen):
             if hits1:
                 player.rect.left = 100 
                 lives -=1
-                vida.kill() 
-                m = HOLE(assets["hole_img"])
-                all_sprites.add(m)
-                mobs1.add(m)
+                vida.kill()
+                if lives >0:
+                    m = HOLE(assets["hole_img"])
+                    all_sprites.add(m)
+                    mobs1.add(m)
             if hits2:
                 player.rect.left = 100
                 lives -=1
                 vida.kill() 
-                u = UNIC(assets["uni_anim"])
-                all_sprites.add(u)
-                mobs2.add(u)
+                if lives >0:
+                    u = UNIC(assets["uni_anim"])
+                    all_sprites.add(u)
+                    mobs2.add(u)
                 
                 
-=======
-            vida = HOLE(assets["lives_img"])
-            hits  = pygame.sprite.spritecollide(player, mobs, True)
-            if hits:
-#                # Toca o som da colisão
-#                boom_sound.play()
-          ##############################      player.kill()
-                lives -=1
-                vida.kill()
->>>>>>> 3ab0cfa97678a89d9557e6997aab260aaa3fb481
+ 
             if lives <= 0:
                 player.kill()
-#                state = DONE
+                state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
-                
 #                explosao = Explosion(player.rect.center, assets["explosion_anim"])
 #                all_sprites.add(explosao)
 #                state = EXPLODING
