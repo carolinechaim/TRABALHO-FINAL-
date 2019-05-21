@@ -228,7 +228,6 @@ class LIVES(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, lives_img,x):
 
-        
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
         
@@ -245,7 +244,6 @@ class LIVES(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em x
         self.rect.left = x
         # Sorteia um lugar inicial em y
-
         self.rect.bottom = 710
 
         # Sorteia uma velocidade inicial
@@ -462,6 +460,7 @@ def game_screen(screen):
             all_sprites.add(l)
             life.add(l)
             x+=70
+
             
     state = PLAYING
     while state != DONE:
@@ -528,6 +527,8 @@ def game_screen(screen):
             if hits1:
                 player.rect.left = 100 
                 lives -=1
+                vida.kill()
+
                 if lives >0:
                     m = HOLE(assets["hole_img"])
                     all_sprites.add(m)
@@ -545,10 +546,9 @@ def game_screen(screen):
 
             if lives <= 0:
                 player.kill()
-#                state = DONE
+                state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
-                
 #                explosao = Explosion(player.rect.center, assets["explosion_anim"])
 #                all_sprites.add(explosao)
 #                state = EXPLODING
