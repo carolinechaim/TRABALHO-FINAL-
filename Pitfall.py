@@ -113,7 +113,7 @@ class HOLE(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, hole_img):
         
-        x = random.randint(300,1000)
+        x = random.randint(450,1000)
         y = 710
         
         # Construtor da classe pai (Sprite).
@@ -288,7 +288,7 @@ class BARRIL(pygame.sprite.Sprite):
         # Sorteia uma velocidade inicial
         self.speedx = -3
         self.speedy = 0
-        
+                                     
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .85 / 2)
     
@@ -529,15 +529,11 @@ def game_screen(screen):
                            
     state = PLAYING
     while state != DONE:
-        
-        # Ajusta a velocidade do jogo.
+    # Ajusta a velocidade do jogo.
         clock.tick(FPS)
-        
         if state == PLAYING:
             # Processa os eventos (mouse, teclado, botÃ£o, etc).
             for event in pygame.event.get():
-                
-                # Verifica se foi fechado.
                 if event.type == pygame.QUIT:
                     state = DONE
                 
@@ -613,18 +609,18 @@ def game_screen(screen):
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
                 all_sprites.empty()
-
+                
                 for event in pygame.event.get():
-                # Verifica se apertou alguma tecla.
+                    # Verifica se apertou alguma tecla.
                     if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-                        # Dependendo da tecla, altera a velocidade.
+                                # Dependendo da tecla, altera a velocidade.
                         if event.key == pygame.K_LEFT:
                             lives = 3
                             for i in  range(lives):   
                                 l = LIVES(assets["lives_img"],x)
                                 life.add(l)
                                 x+=40
-                                
+                            
                             m = HOLE(assets["hole_img"])
                             all_sprites.add(m)
                             mobs1.add(m)
@@ -632,8 +628,8 @@ def game_screen(screen):
                             u = UNIC(assets["uni_anim"])
                             all_sprites.add(u)
                             mobs2.add(u)
-
-    
+                            
+                            
                             b = BARRIL(assets["bar_anim"])
                             all_sprites.add(b)
                             mobs3.add(b)
