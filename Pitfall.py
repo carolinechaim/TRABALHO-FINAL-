@@ -158,7 +158,7 @@ class UNIC(pygame.sprite.Sprite):
     def __init__(self, uni_anim):
         
         x =  1000
-        y = random.randint(500, 635) 
+        y = random.randint(450, 635) 
         
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -178,7 +178,7 @@ class UNIC(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.bottom = y
         # Sorteia uma velocidade inicial
-        self.speedx = -5
+        self.speedx = -6
         self.speedy = 0
         
         # Melhora a colisÃ£o estabelecendo um raio de um circulo
@@ -190,7 +190,7 @@ class UNIC(pygame.sprite.Sprite):
         # Controle de ticks de animaÃ§Ã£o: troca de imagem a cada self.frame_ticks milissegundos.
         self.frame_ticks = 75
         
-    # Metodo que atualiza a posiÃ§Ã£o do meteoro
+    # Metodo que atualiza a posio do meteoro
     def update(self):
         
         if self.rect.left <= 0:
@@ -244,7 +244,7 @@ class LIVES(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em x
         self.rect.left = x
         # Sorteia um lugar inicial em y
-        self.rect.bottom = 710
+        self.rect.bottom = 635 +40  
 
         # Sorteia uma velocidade inicial
         self.speedx = 0
@@ -289,7 +289,7 @@ class BARRIL(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.bottom = y
         # Sorteia uma velocidade inicial
-        self.speedx = -5
+        self.speedx = -3
         self.speedy = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -445,7 +445,6 @@ def init_screen(screen):
     background_init = Back(assets["back_anim"])
     
     all_sprites = pygame.sprite.Group()
-
     all_sprites.add(background_init)
         
     running = True
@@ -524,7 +523,7 @@ def game_screen(screen):
     mobs2.add(u)
 
     
-    b = UNIC(assets["bar_anim"])
+    b = BARRIL(assets["bar_anim"])
     all_sprites.add(b)
     mobs3.add(b)
     # Loop principal.
@@ -541,11 +540,10 @@ def game_screen(screen):
     for i in  range(lives):
             
             l = LIVES(assets["lives_img"],x)
-            all_sprites.add(l)
             life.add(l)
-            x+=70
-
+            x+=40
             
+                           
     state = PLAYING
     while state != DONE:
         
@@ -608,23 +606,54 @@ def game_screen(screen):
             vida = LIVES(assets["lives_img"],b )
             hits1  = pygame.sprite.spritecollide(player, mobs1, True)
             hits2  = pygame.sprite.spritecollide(player, mobs2, True)
+            hits3  = pygame.sprite.spritecollide(player, mobs3, True)
             if hits1:
                 player.rect.left = 100 
                 lives -=1
-                vida.kill()
-
+                life.empty()
+                x = 0 
+                for i in  range(lives):
+                     l = LIVES(assets["lives_img"],x)
+                     life.add(l)
+                     life.draw(screen)
+                     x+=40
                 if lives >0:
                     m = HOLE(assets["hole_img"])
                     all_sprites.add(m)
                     mobs1.add(m)
+                    
+                    
             if hits2:
                 player.rect.left = 100
                 lives -=1
-                vida.kill() 
+                life.empty()
+                x = 0 
+                for i in  range(lives):
+                     l = LIVES(assets["lives_img"],x)
+                     life.add(l)
+                     life.draw(screen)
+                     x+=40
+                
                 if lives >0:
                     u = UNIC(assets["uni_anim"])
                     all_sprites.add(u)
                     mobs2.add(u)
+                    
+                    
+            if hits3:
+                player.rect.left = 100
+                lives -=1
+                life.empty()
+                x = 0 
+                for i in  range(lives):
+                    l = LIVES(assets["lives_img"],x)
+                    life.add(l)
+                    life.draw(screen)
+                    x+=40
+                if lives >0:
+                      b = BARRIL(assets["bar_anim"])
+                      all_sprites.add(b)
+                      mobs3.add(b)
                 
                 
 
@@ -633,26 +662,38 @@ def game_screen(screen):
 #               state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
-#                explosao = Explosion(player.rect.center, assets["explosion_anim"])
-#                all_sprites.add(explosao)
-#                state = EXPLODING
-#                explosion_tick = pygame.time.get_ticks()
-#                explosion_duration = explosao.frame_ticks * len(explosao.explosion_anim) + 400
-            
-#        if state == EXPLODING:
-#            now = pygame.time.get_ticks()
-#            if now - explosion_tick > explosion_duration:
-#                if lives == 0:
-#                    state = DONE
-#                else:
-#                    state = PLAYING
-#                    player = Player(assets["player_img"])
-#                    all_sprites.add(player)
-
+                all_sprites.empty()
+                lives = 3
+                for i in  range(lives):   
+                    l = LIVES(assets["lives_img"],x)
+                    life.add(l)
+                    x+=40
+                for event in pygame.event.get():
+                # Verifica se apertou alguma tecla.
+                    if event.type == pygame.KEYDOWN:
+                        # Dependendo da tecla, altera a velocidade.
+                        if event.key == pygame.K_SPACE:
+                            state == PLAYING
+                            background = assets["background"]
+                            background_rect = background.get_rect()
+                            screen.fill(BLACK)
+                            screen.blit(background, background_rect)
+                            all_sprites.draw(screen)
+                            life.draw(screen)
+                        if event.key == pygame.K_RIGHT:
+                            state = DONE
+                
+                
+                
+                
+                
+                
+                
         # A cada loop, redesenha o fundo e os sprites
             screen.fill(BLACK)
             screen.blit(background, background_rect)
             all_sprites.draw(screen)
+            life.draw(screen)
     
             for event in pygame.event.get() :                    
                     if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
