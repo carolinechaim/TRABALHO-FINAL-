@@ -8,8 +8,7 @@ from os import path
 
 # Estabelece a pasta que contem as figuras e sons.
 img_dir = path.join(path.dirname(__file__), 'Imagens')
-#snd_dir = path.join(path.dirname(__file__), 'snd')
-#fnt_dir = path.join(path.dirname(__file__), 'font')
+
 
 # Dados gerais do jogo.
 WIDTH = 1000 # Largura da tela
@@ -158,7 +157,7 @@ class UNIC(pygame.sprite.Sprite):
     def __init__(self, uni_anim):
         
         x =  1000
-        y = random.randint(450, 635) 
+        y = random.randint(450, 500) 
         
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -269,15 +268,15 @@ class BARRIL(pygame.sprite.Sprite):
     def __init__(self, bar_anim):
         
         x =  1000
-        y = random.randint(500, 635) 
+        y =  670
         
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
         
         self.images = bar_anim
         self.currentimg = 0
-        self.image = pygame.transform.scale(self.images[self.currentimg], (60, 103))
-        
+        self.image = pygame.transform.scale(self.images[self.currentimg], (40, 80))
+        self.image.set_colorkey(BLACK)
 ##        # Deixando transparente.
 #        self.image.set_colorkey(BLACK)
         
@@ -485,13 +484,7 @@ def game_screen(screen):
     background = assets["background"]
     background_rect = background.get_rect()
 
-    
-#    # Carrega os sons do jogo
-#    pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
-#    pygame.mixer.music.set_volume(0.4)
-#    boom_sound = assets["boom_sound"]
-#    destroy_sound = assets["destroy_sound"]
-#    pew_sound = assets["pew_sound"]
+
 
     # Cria uma nave. O construtor serÃ¡ chamado automaticamente.
     player = Player(assets["boneco_anim"])
@@ -526,15 +519,9 @@ def game_screen(screen):
     b = BARRIL(assets["bar_anim"])
     all_sprites.add(b)
     mobs3.add(b)
-    # Loop principal.
-#    pygame.mixer.music.play(loops=-1)
-
-    score = 0
 
     lives = 3
-
     PLAYING =  0
-    EXPLODING = 1
     DONE = 2
     x = 00
     for i in  range(lives):
@@ -586,24 +573,9 @@ def game_screen(screen):
         all_sprites.update()
         
         if state == PLAYING:
-##            # Verifica se houve colisÃ£o entre tiro e meteoro
-##            hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
-##            for hit in hits: # Pode haver mais de um
-##                # O meteoro e destruido e precisa ser recriado
-##                destroy_sound.play()
-##                m = Mob(assets["mob_img"]) 
-##                all_sprites.add(m)
-##                mobs.add(m)
-##
-##                # No lugar do meteoro antigo, adicionar uma explosÃ£o.
-##                explosao = Explosion(hit.rect.center, assets["boneco_anim"])
-##                all_sprites.add(explosao)
-##
-##                # Ganhou pontos!
 #                  
             # Verifica se houve colisÃ£o entre nave e meteoro
             b = 0 
-            vida = LIVES(assets["lives_img"],b )
             hits1  = pygame.sprite.spritecollide(player, mobs1, True)
             hits2  = pygame.sprite.spritecollide(player, mobs2, True)
             hits3  = pygame.sprite.spritecollide(player, mobs3, True)
@@ -663,16 +635,30 @@ def game_screen(screen):
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
                 all_sprites.empty()
-                lives = 3
-                for i in  range(lives):   
-                    l = LIVES(assets["lives_img"],x)
-                    life.add(l)
-                    x+=40
+
                 for event in pygame.event.get():
                 # Verifica se apertou alguma tecla.
-                    if event.type == pygame.KEYDOWN:
+                    if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
                         # Dependendo da tecla, altera a velocidade.
-                        if event.key == pygame.K_SPACE:
+                        if event.key == pygame.K_LEFT:
+                            lives = 3
+                            for i in  range(lives):   
+                                l = LIVES(assets["lives_img"],x)
+                                life.add(l)
+                                x+=40
+                                
+                            m = HOLE(assets["hole_img"])
+                            all_sprites.add(m)
+                            mobs1.add(m)
+                            
+                            u = UNIC(assets["uni_anim"])
+                            all_sprites.add(u)
+                            mobs2.add(u)
+
+    
+                            b = BARRIL(assets["bar_anim"])
+                            all_sprites.add(b)
+                            mobs3.add(b)
                             state == PLAYING
                             background = assets["background"]
                             background_rect = background.get_rect()
@@ -680,6 +666,10 @@ def game_screen(screen):
                             screen.blit(background, background_rect)
                             all_sprites.draw(screen)
                             life.draw(screen)
+                            player = Player(assets["boneco_anim"])
+                            all_sprites.add(player)
+
+                        
                         if event.key == pygame.K_RIGHT:
                             state = DONE
                 
