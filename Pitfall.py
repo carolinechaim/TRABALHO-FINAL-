@@ -504,9 +504,9 @@ def game_screen(screen):
 
     # Cria 2 meteoros e adiciona no grupo meteoros
 
-    m = HOLE(assets["hole_img"])
-    all_sprites.add(m)
-    mobs1.add(m)
+#    m = HOLE(assets["hole_img"])
+#    all_sprites.add(m)
+#    mobs1.add(m)
         
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
@@ -514,8 +514,8 @@ def game_screen(screen):
 
     
     b = BARRIL(assets["bar_anim"])
-    all_sprites.add(b)
-    mobs3.add(b)
+#    all_sprites.add(b)
+#    mobs3.add(b)
 
     lives = 3
     PLAYING =  0
@@ -572,14 +572,15 @@ def game_screen(screen):
                 lives += 1
                 l = LIVES(assets["lives_img"],x)
                 life.add(l)
-                all_sprites.add(l)
                 life.draw(screen)
+                b.rect.left = 1000 
+                u.rect.left = 1000
                 
             for e in [mobs1, mobs2, mobs3]:
                 hits = pygame.sprite.spritecollide(player, e, True)
                 if hits:
                     player.rect.left = 100 
-                    lives -=1
+                    lives -=1 
                     life.empty()
                     if e ==  mobs1:
                         m = HOLE(assets["hole_img"])
@@ -593,13 +594,13 @@ def game_screen(screen):
                         b = BARRIL(assets["bar_anim"])
                         all_sprites.add(b)
                         mobs3.add(b)                        
-                    x = 0
+                    a = 0
                     for i in  range(lives):
-                         l = LIVES(assets["lives_img"],x)
+                         l = LIVES(assets["lives_img"],a)
                          life.add(l)
-                         life.draw(screen)
-                         x+=40
-
+                         
+                         a+=40
+                    life.draw(screen)
                 
                 
 
