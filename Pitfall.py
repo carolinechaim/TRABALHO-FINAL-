@@ -388,6 +388,8 @@ def load_assets(img_dir):
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
     assets["musica_fim"] = pygame.mixer.Sound(path.join(snd_dir, 'Game Over Sound Effects High Quality-[AudioTrimmer.com].ogg'))
+    assets["pulando"] = pygame.mixer.Sound(path.join(snd_dir, 'Mario Jump - Gaming Sound Effect (HD)-[AudioTrimmer.com].ogg'))
+    assets["unicornio"] = pygame.mixer.Sound(path.join(snd_dir, 'Unicorn Puking Sound effect COPYRIGHT FREE-[AudioTrimmer.com]-[AudioTrimmer.com].ogg'))
     
     bar_anim=[]
     for i in range(4):
@@ -396,7 +398,6 @@ def load_assets(img_dir):
         img3 = pygame.transform.scale(img3, (50, 45))
         bar_anim.append(img3)
     assets["bar_anim"]=bar_anim
-    
     
     uni_anim = []
     for i in range (10):
@@ -565,9 +566,13 @@ def game_screen(screen):
 #                     Se for um espaÃ§o atira!
                     if event.key == pygame.K_SPACE:
                         player.speedy =-30
-#                        pygame.mixer.music.load(path.join(snd_dir, 'Game Over Sound Effects High Quality.ogg'))
-#                        pygame.mixer.music.set_volume(0.4)
-#                        pygame.mixer.music.play(loops=-1)
+                        assets["pulando"].play()
+
+
+
+
+
+
 #                    
 
                         
@@ -609,6 +614,7 @@ def game_screen(screen):
                         all_sprites.add(m)
                         mobs1.add(m)
                     if e ==  mobs2:
+                        assets["unicornio"].play()
                         u = UNIC(assets["uni_anim"])
                         all_sprites.add(u)
                         mobs2.add(u)
