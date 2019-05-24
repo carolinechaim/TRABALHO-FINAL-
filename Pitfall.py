@@ -473,9 +473,9 @@ def game_screen(screen):
     background_rect = background.get_rect()
 
 
-    pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
+    pygame.mixer.music.load(path.join(snd_dir, 'LightingGrass+Wind EffectSound Test.ogg'))
     pygame.mixer.music.set_volume(0.4)
-    
+    #nomedavariavel.play()
     # Cria uma nave. O construtor serÃ¡ chamado automaticamente.
     player = Player(assets["boneco_anim"])
 
