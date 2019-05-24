@@ -27,6 +27,7 @@ YELLOW = (255, 255, 0)
 INIT = 0
 GAME = 1
 QUIT = 2
+FIM = 4
 
 
 # Classe Jogador que representa a nave
@@ -386,6 +387,7 @@ def load_assets(img_dir):
     assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
+    assets["musica_fim"] = pygame.mixer.Sound(path.join(snd_dir, 'Game Over Sound Effects High Quality-[AudioTrimmer.com].ogg'))
     
     bar_anim=[]
     for i in range(4):
@@ -460,8 +462,29 @@ def init_screen(screen):
 
     return state
 
-
-
+def end_game(screen):
+    assets= load_assets(img_dir)
+    background = assets["game_over"]
+    background_rect = background.get_rect() 
+    running = True
+    while running:
+        for event in pygame.event.get():
+                        # Verifica se apertou alguma tecla.
+            if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+                        # Dependendo da tecla, altera a velocidade.
+                if event.key == pygame.K_y:
+                    pygame.mixer.music.set_volume(0) 
+                    state = GAME
+                    running = False
+                
+                if event.key == pygame.K_n:
+                    state = QUIT
+                    running = False
+        screen.fill(BLACK)
+        screen.blit(background, background_rect)
+        pygame.display.flip()
+    return state
+                
 def game_screen(screen):
     # Carrega todos os assets uma vez sÃ³ e guarda em um dicionÃ¡rio
     assets = load_assets(img_dir)
@@ -472,7 +495,6 @@ def game_screen(screen):
     # Carrega o fundo do jogo
     background = assets["background"]
     background_rect = background.get_rect()
-
 
     pygame.mixer.music.load(path.join(snd_dir, 'LightingGrass+Wind EffectSound Test-[AudioTrimmer.com].ogg'))
     pygame.mixer.music.set_volume(0.4)
@@ -543,7 +565,10 @@ def game_screen(screen):
 #                     Se for um espaÃ§o atira!
                     if event.key == pygame.K_SPACE:
                         player.speedy =-30
-                    
+#                        pygame.mixer.music.load(path.join(snd_dir, 'Game Over Sound Effects High Quality.ogg'))
+#                        pygame.mixer.music.set_volume(0.4)
+#                        pygame.mixer.music.play(loops=-1)
+#                    
 
                         
                 # Verifica se soltou alguma tecla.
@@ -575,6 +600,7 @@ def game_screen(screen):
             for e in [mobs1, mobs2, mobs3]:
                 hits = pygame.sprite.spritecollide(player, e, True)
                 if hits:
+
                     player.rect.left = 100 
                     lives -=1 
                     life.empty()
@@ -602,56 +628,11 @@ def game_screen(screen):
 
             if lives <= 0:
                 player.kill()
-#                pygame.mixer.music.play(loops=-1)
-                pygame.mixer.music.load(path.join(snd_dir, 'Game Over Sound Effects High Quality.ogg'))
-#                pygame.mixer.music.set_volume(0.4)
-                background = assets["game_over"]
-                background_rect = background.get_rect() 
-                all_sprites.empty()
-                
-                for event in pygame.event.get():
-                    # Verifica se apertou alguma tecla.
-                    if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-                                # Dependendo da tecla, altera a velocidade.
-                        if event.key == pygame.K_LEFT:
-                            lives = 3
-                            x = 0
-                            for i in  range(lives):   
-                                l = LIVES(assets["lives_img"],x)
-                                life.add(l)
-                                x+=40
-                            
-                            m = HOLE(assets["hole_img"])
-                            all_sprites.add(m)
-                            mobs1.add(m)
-                            
-                            u = UNIC(assets["uni_anim"])
-                            all_sprites.add(u)
-                            mobs2.add(u)
-                            
-                            
-                            b = BARRIL(assets["bar_anim"])
-                            all_sprites.add(b)
-                            mobs3.add(b)
-                            state == PLAYING
-                            background = assets["background"]
-                            background_rect = background.get_rect()
-                            screen.fill(BLACK)
-                            screen.blit(background, background_rect)
-                            all_sprites.draw(screen)
-                            life.draw(screen)
-                            player = Player(assets["boneco_anim"])
-                            all_sprites.add(player)
-
-                        
-                        if event.key == pygame.K_RIGHT:
-                            state = DONE
-                
-                
-                
-                
-                
-                
+                pygame.mixer.music.stop()
+                assets["musica_fim"].play()
+                return FIM
+                    
+              
                 
         # A cada loop, redesenha o fundo e os sprites
             screen.fill(BLACK)
@@ -659,24 +640,6 @@ def game_screen(screen):
             all_sprites.draw(screen)
             life.draw(screen)
     
-#            for event in pygame.event.get() :                    
-#                    if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-#                        if event.key == pygame.K_SPACE:
-#                            state = PLAYING
-#                            #player = Player(assets["player_img"])
-#                            all_sprites.add(player)
-#        # Desenha o score
-#        text_surface = score_font.render("{:08d}".format(score), True, YELLOW)
-#        text_rect = text_surface.get_rect()
-#        text_rect.midtop = (WIDTH / 2,  10)
-#        screen.blit(text_surface, text_rect)
-#
-#        # Desenha as vidas
-#        text_surface = score_font.render(chr(9829) * lives, True, RED)
-#        text_rect = text_surface.get_rect()
-#        text_rect.bottomleft = (10, HEIGHT - 10)
-#        screen.blit(text_surface, text_rect)
-        
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
     return QUIT
@@ -699,6 +662,8 @@ try:
             state = init_screen(screen)
         elif state == GAME:
             state = game_screen(screen)
+        elif state == FIM:
+            state = end_game(screen)
         else:
             state = QUIT
 finally:
