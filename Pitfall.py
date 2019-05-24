@@ -504,9 +504,9 @@ def game_screen(screen):
 
     # Cria 2 meteoros e adiciona no grupo meteoros
 
-#    m = HOLE(assets["hole_img"])
-#    all_sprites.add(m)
-#    mobs1.add(m)
+    m = HOLE(assets["hole_img"])
+    all_sprites.add(m)
+    mobs1.add(m)
         
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
@@ -514,8 +514,8 @@ def game_screen(screen):
 
     
     b = BARRIL(assets["bar_anim"])
-#    all_sprites.add(b)
-#    mobs3.add(b)
+    all_sprites.add(b)
+    mobs3.add(b)
 
     lives = 3
     PLAYING =  0
@@ -617,6 +617,7 @@ def game_screen(screen):
                                 # Dependendo da tecla, altera a velocidade.
                         if event.key == pygame.K_LEFT:
                             lives = 3
+                            x = 0
                             for i in  range(lives):   
                                 l = LIVES(assets["lives_img"],x)
                                 life.add(l)
