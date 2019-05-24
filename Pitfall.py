@@ -661,12 +661,12 @@ def game_screen(screen):
             all_sprites.draw(screen)
             life.draw(screen)
     
-            for event in pygame.event.get() :                    
-                    if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-                        if event.key == pygame.K_SPACE:
-                            state = PLAYING
-                            #player = Player(assets["player_img"])
-                            all_sprites.add(player)
+#            for event in pygame.event.get() :                    
+#                    if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+#                        if event.key == pygame.K_SPACE:
+#                            state = PLAYING
+#                            #player = Player(assets["player_img"])
+#                            all_sprites.add(player)
 #        # Desenha o score
 #        text_surface = score_font.render("{:08d}".format(score), True, YELLOW)
 #        text_rect = text_surface.get_rect()
