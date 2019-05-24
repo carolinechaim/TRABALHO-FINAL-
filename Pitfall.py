@@ -28,6 +28,7 @@ INIT = 0
 GAME = 1
 QUIT = 2
 
+
 # Classe Jogador que representa a nave
 class Player(pygame.sprite.Sprite):
     
@@ -475,8 +476,8 @@ def game_screen(screen):
 
     pygame.mixer.music.load(path.join(snd_dir, 'LightingGrass+Wind EffectSound Test.ogg'))
     pygame.mixer.music.set_volume(0.4)
-    #nomedavariavel.play()
-    # Cria uma nave. O construtor serÃ¡ chamado automaticamente.
+    
+  # Cria uma nave. O construtor serÃ¡ chamado automaticamente.
     player = Player(assets["boneco_anim"])
 
 #    # Carrega a fonte para desenhar o score.
@@ -601,6 +602,9 @@ def game_screen(screen):
 
             if lives <= 0:
                 player.kill()
+#                pygame.mixer.music.play(loops=-1)
+#                pygame.mixer.music.load(path.join(snd_dir, 'Game Over Sound Effects High Quality.ogg'))
+#                pygame.mixer.music.set_volume(0.4)
 #               state = DONE
                 background = assets["game_over"]
                 background_rect = background.get_rect() 
