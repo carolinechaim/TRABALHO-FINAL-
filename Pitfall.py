@@ -8,7 +8,7 @@ from os import path
 
 # Estabelece a pasta que contem as figuras e sons.
 img_dir = path.join(path.dirname(__file__), 'Imagens')
-
+snd_dir = path.join(path.dirname(__file__), 'Sons')
 
 # Dados gerais do jogo.
 WIDTH = 1000 # Largura da tela
@@ -329,16 +329,6 @@ class BARRIL(pygame.sprite.Sprite):
                 self.currentimg=0
             self.image = self.images[self.currentimg]
 
-
-
-
-
-
-
-
-
-
-
     
 class Back(pygame.sprite.Sprite):
     
@@ -483,7 +473,9 @@ def game_screen(screen):
     background_rect = background.get_rect()
 
 
-
+    pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
+    pygame.mixer.music.set_volume(0.4)
+    
     # Cria uma nave. O construtor serÃ¡ chamado automaticamente.
     player = Player(assets["boneco_anim"])
 
@@ -521,6 +513,9 @@ def game_screen(screen):
     PLAYING =  0
     DONE = 2
     x = 00
+    
+    pygame.mixer.music.play(loops=-1)
+    
     for i in  range(lives):
             
             l = LIVES(assets["lives_img"],x)
