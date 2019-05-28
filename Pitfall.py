@@ -28,7 +28,6 @@ INIT = 0
 GAME = 1
 QUIT = 2
 FIM = 4
-TELA= 5
 
 
 # Classe Jogador que representa a nave
@@ -146,10 +145,6 @@ class HOLE(pygame.sprite.Sprite):
     def update(self):
         
         pass
-
-
-
-
 
 
 class UNIC(pygame.sprite.Sprite):
@@ -389,6 +384,7 @@ def load_assets(img_dir):
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
     assets["background2"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 2.png')).convert()
+    assets["background3"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_3.jpg')).convert()
     assets["musica_fim"] = pygame.mixer.Sound(path.join(snd_dir, 'Game Over Sound Effects High Quality-[AudioTrimmer.com].ogg'))
     assets["pulando"] = pygame.mixer.Sound(path.join(snd_dir, 'Mario Jump - Gaming Sound Effect (HD)-[AudioTrimmer.com].ogg'))
     assets["unicornio"] = pygame.mixer.Sound(path.join(snd_dir, 'Unicorn Puking Sound effect COPYRIGHT FREE-[AudioTrimmer.com]-[AudioTrimmer.com].ogg'))
@@ -523,24 +519,24 @@ def game_screen(screen):
 
     # Cria 2 meteoros e adiciona no grupo meteoros
 
-#    m = HOLE(assets["hole_img"])
-#    all_sprites.add(m)
-#    mobs1.add(m)
-#        
+    m = HOLE(assets["hole_img"])
+    all_sprites.add(m)
+    mobs1.add(m)
+        
     u = UNIC(assets["uni_anim"])
-#    all_sprites.add(u)
-#    mobs2.add(u)
-#
-#    
+    all_sprites.add(u)
+    mobs2.add(u)
+
+    
     b = BARRIL(assets["bar_anim"])
-#    all_sprites.add(b)
-#    mobs3.add(b)
+    all_sprites.add(b)
+    mobs3.add(b)
 
     lives = 3
     PLAYING =  0
     DONE = 2
     x = 00
-    contador = 0
+    contador = 1
     pygame.mixer.music.play(loops=-1)
     
     for i in  range(lives):
@@ -608,7 +604,7 @@ def game_screen(screen):
                     background_rect = background.get_rect()
                 
                 elif contador % 3 == 0:
-                    background = assets["background2"]
+                    background = assets["background3"]
                     background_rect = background.get_rect()
                 
             for e in [mobs1, mobs2, mobs3]:
@@ -679,8 +675,6 @@ try:
             state = game_screen(screen)
         elif state == FIM:
             state = end_game(screen)
-        elif state == TELA:
-            state = troca_tela(screen)
         else:
             state = QUIT
 finally:
