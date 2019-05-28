@@ -28,6 +28,7 @@ INIT = 0
 GAME = 1
 QUIT = 2
 FIM = 4
+TELA= 5
 
 
 # Classe Jogador que representa a nave
@@ -72,12 +73,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
-        # Mantem dentro da tela
+#Mantem dentro da tela
         if self.rect.right >= WIDTH:
             self.rect.right = 60
+
         if self.rect.left <= 0:
             self.rect.left = 0
-            
             
             
         if self.rect.bottom <= 137:
@@ -435,7 +436,10 @@ def load_assets(img_dir):
     assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
+    assets["background2"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 2.png')).convert()
     assets["musica_fim"] = pygame.mixer.Sound(path.join(snd_dir, 'Game Over Sound Effects High Quality-[AudioTrimmer.com].ogg'))
+    assets["pulando"] = pygame.mixer.Sound(path.join(snd_dir, 'Mario Jump - Gaming Sound Effect (HD)-[AudioTrimmer.com].ogg'))
+    assets["unicornio"] = pygame.mixer.Sound(path.join(snd_dir, 'Unicorn Puking Sound effect COPYRIGHT FREE-[AudioTrimmer.com]-[AudioTrimmer.com].ogg'))
     
     bar_anim=[]
     for i in range(4):
@@ -444,7 +448,6 @@ def load_assets(img_dir):
         img3 = pygame.transform.scale(img3, (50, 45))
         bar_anim.append(img3)
     assets["bar_anim"]=bar_anim
-    
     
     uni_anim = []
     for i in range (10):
@@ -510,6 +513,7 @@ def init_screen(screen):
 
     return state
 
+
 def end_game(screen):
     assets= load_assets(img_dir)
     background = assets["game_over"]
@@ -542,8 +546,8 @@ def game_screen(screen):
 
     # Carrega o fundo do jogo
     background = assets["background"]
-    background_rect = background.get_rect()
-
+    background_rect = background.get_rect() 
+ 
     pygame.mixer.music.load(path.join(snd_dir, 'LightingGrass+Wind EffectSound Test-[AudioTrimmer.com].ogg'))
     pygame.mixer.music.set_volume(0.4)
     
@@ -568,15 +572,22 @@ def game_screen(screen):
 
     # Cria 2 meteoros e adiciona no grupo meteoros
 
+<<<<<<< HEAD
     m = HOLE(assets["hole_img"])
 #    all_sprites.add(m)
 #    mobs1.add(m)
         
+=======
+#    m = HOLE(assets["hole_img"])
+#    all_sprites.add(m)
+#    mobs1.add(m)
+#        
+>>>>>>> 1ff05c7f96515cca3231fd81e0a510c5d8cae0de
     u = UNIC(assets["uni_anim"])
-    all_sprites.add(u)
-    mobs2.add(u)
-
-    
+#    all_sprites.add(u)
+#    mobs2.add(u)
+#
+#    
     b = BARRIL(assets["bar_anim"])
 #    all_sprites.add(b)
 #    mobs3.add(b)
@@ -589,7 +600,7 @@ def game_screen(screen):
     PLAYING =  0
     DONE = 2
     x = 00
-    
+    contador = 0
     pygame.mixer.music.play(loops=-1)
     
     for i in  range(lives):
@@ -618,10 +629,7 @@ def game_screen(screen):
 #                     Se for um espaÃ§o atira!
                     if event.key == pygame.K_SPACE:
                         player.speedy =-30
-#                        pygame.mixer.music.load(path.join(snd_dir, 'Game Over Sound Effects High Quality.ogg'))
-#                        pygame.mixer.music.set_volume(0.4)
-#                        pygame.mixer.music.play(loops=-1)
-#                    
+                        assets["pulando"].play()
 
                         
                 # Verifica se soltou alguma tecla.
@@ -650,6 +658,19 @@ def game_screen(screen):
                 b.rect.left = 1000 
                 u.rect.left = 1000
                 
+                contador +=1
+                if contador % 3 == 1:
+                    background = assets["background"]
+                    background_rect = background.get_rect() 
+                            
+                elif contador % 3 == 2:
+                    background = assets["background2"]
+                    background_rect = background.get_rect()
+                
+                elif contador % 3 == 0:
+                    background = assets["background2"]
+                    background_rect = background.get_rect()
+                
             for e in [mobs1, mobs2, mobs3]:
                 hits = pygame.sprite.spritecollide(player, e, True)
                 if hits:
@@ -662,6 +683,7 @@ def game_screen(screen):
                         all_sprites.add(m)
                         mobs1.add(m)
                     if e ==  mobs2:
+                        assets["unicornio"].play()
                         u = UNIC(assets["uni_anim"])
                         all_sprites.add(u)
                         mobs2.add(u)
@@ -726,6 +748,8 @@ try:
             state = game_screen(screen)
         elif state == FIM:
             state = end_game(screen)
+        elif state == TELA:
+            state = troca_tela(screen)
         else:
             state = QUIT
 finally:
