@@ -432,7 +432,7 @@ def load_assets(img_dir):
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
     assets["background2"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 2.png')).convert()
-    assets["background3"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_3.jpg')).convert()
+    assets["background3"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 3.png')).convert()
     assets["musica_fim"] = pygame.mixer.Sound(path.join(snd_dir, 'Game Over Sound Effects High Quality-[AudioTrimmer.com].ogg'))
     assets["pulando"] = pygame.mixer.Sound(path.join(snd_dir, 'Mario Jump - Gaming Sound Effect (HD)-[AudioTrimmer.com].ogg'))
     assets["unicornio"] = pygame.mixer.Sound(path.join(snd_dir, 'Unicorn Puking Sound effect COPYRIGHT FREE-[AudioTrimmer.com]-[AudioTrimmer.com].ogg'))
@@ -568,36 +568,24 @@ def game_screen(screen):
 
     # Cria 2 meteoros e adiciona no grupo meteoros
 
-<<<<<<< HEAD
-    m = HOLE(assets["hole_img"])
-    all_sprites.add(m)
-    mobs1.add(m)
-        
-=======
-<<<<<<< HEAD
     m = HOLE(assets["hole_img"])
 #    all_sprites.add(m)
 #    mobs1.add(m)
-        
-=======
-#    m = HOLE(assets["hole_img"])
-#    all_sprites.add(m)
-#    mobs1.add(m)
-#        
->>>>>>> 1ff05c7f96515cca3231fd81e0a510c5d8cae0de
->>>>>>> 4c02bb54d1254dedc63dcf29c3f35880ec3897da
+
+
+
     u = UNIC(assets["uni_anim"])
-    all_sprites.add(u)
-    mobs2.add(u)
+#    all_sprites.add(u)
+#    mobs2.add(u)
 
     
     b = BARRIL(assets["bar_anim"])
-    all_sprites.add(b)
-    mobs3.add(b)
+#    all_sprites.add(b)
+#    mobs3.add(b)
 
     p = Premio(assets["premio_img"])
-    all_sprites.add(p)
-    mobs4.add(p)
+#    all_sprites.add(p)
+#    mobs4.add(p)
     
     lives = 3
     PLAYING =  0
