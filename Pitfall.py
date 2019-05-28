@@ -569,23 +569,23 @@ def game_screen(screen):
     # Cria 2 meteoros e adiciona no grupo meteoros
 
     m = HOLE(assets["hole_img"])
-#    all_sprites.add(m)
-#    mobs1.add(m)
+    all_sprites.add(m)
+    mobs1.add(m)
 
 
 
     u = UNIC(assets["uni_anim"])
-#    all_sprites.add(u)
-#    mobs2.add(u)
+    all_sprites.add(u)
+    mobs2.add(u)
 
     
     b = BARRIL(assets["bar_anim"])
-#    all_sprites.add(b)
-#    mobs3.add(b)
+    all_sprites.add(b)
+    mobs3.add(b)
 
     p = Premio(assets["premio_img"])
-#    all_sprites.add(p)
-#    mobs4.add(p)
+    all_sprites.add(p)
+    mobs4.add(p)
     
     lives = 3
     PLAYING =  0
