@@ -330,6 +330,53 @@ class BARRIL(pygame.sprite.Sprite):
                 # Se sim, tchau explosão!
                 self.currentimg=0
             self.image = self.images[self.currentimg]
+            
+
+
+
+
+
+class Premio(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self, premio_img):
+        q = [635 - 110, 635]
+        x = random.randint(750,900)
+        y = 635 - 110
+    
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(premio_img, (35, 40))
+        
+#        # Deixando transparente.
+#        self.image.set_colorkey(BLACK)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.centerx = x
+        # Sorteia um lugar inicial em y
+        self.rect.bottom = y
+        # Sorteia uma velocidade inicial
+        self.speedx = 0
+        self.speedy = 0
+        
+        # Melhora a colisÃ£o estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .45 / 2)
+        
+    # Metodo que atualiza a posiÃ§Ã£o do meteoro
+    def update(self):
+        
+        pass
+
+
+
+
+
+
 
     
 class Back(pygame.sprite.Sprite):
@@ -384,6 +431,7 @@ def load_assets(img_dir):
     assets = {}
     assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
+    assets["premio_img"] = pygame.image.load(path.join(img_dir, "saco.jpg")).convert()
     assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()
     assets ["background_init"] = pygame.image.load(path.join(img_dir, 'imagem 1.jpeg')).convert()
     assets["background"] = pygame.image.load(path.join(img_dir, 'imagem de fundo_ 1.jpg')).convert()
@@ -514,14 +562,15 @@ def game_screen(screen):
     mobs1 = pygame.sprite.Group()
     mobs2 = pygame.sprite.Group()
     mobs3 = pygame.sprite.Group()
+    mobs4 = pygame.sprite.Group()
     life = pygame.sprite.Group()
 
 
     # Cria 2 meteoros e adiciona no grupo meteoros
 
     m = HOLE(assets["hole_img"])
-    all_sprites.add(m)
-    mobs1.add(m)
+#    all_sprites.add(m)
+#    mobs1.add(m)
         
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
@@ -529,9 +578,13 @@ def game_screen(screen):
 
     
     b = BARRIL(assets["bar_anim"])
-    all_sprites.add(b)
-    mobs3.add(b)
+#    all_sprites.add(b)
+#    mobs3.add(b)
 
+    p = Premio(assets["premio_img"])
+    all_sprites.add(p)
+    mobs4.add(p)
+    
     lives = 3
     PLAYING =  0
     DONE = 2
@@ -625,7 +678,16 @@ def game_screen(screen):
                     life.draw(screen)
                 
                 
-
+            hits = pygame.sprite.spritecollide(player, mobs4, True)
+            if hits:
+                p = Premio(assets["premio_img"])
+                all_sprites.add(p)
+                mobs4.add(p)
+                p.rect.left = 5
+                p.rect.top = 25
+                
+                
+                
             if lives <= 0:
                 player.kill()
                 pygame.mixer.music.stop()
