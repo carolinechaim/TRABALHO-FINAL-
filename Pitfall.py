@@ -29,6 +29,7 @@ GAME = 1
 QUIT = 2
 FIM = 4
 
+GRAVITY = 3
 
 # Classe Jogador que representa a nave
 class Player(pygame.sprite.Sprite):
@@ -79,13 +80,13 @@ class Player(pygame.sprite.Sprite):
         if self.rect.left <= 0:
             self.rect.left = 0
             
-            
-        if self.rect.bottom <= 137:
-            self.speedy = 10
+        self.speedy += GRAVITY
+#        if self.rect.bottom <= 137:
+#            self.speedy = 10
         if self.rect.bottom >= 635:
             self.rect.bottom = 635
-        if self.rect.bottom <= 500:
-            self.speedy = 10
+#        if self.rect.bottom <= 500:
+#            self.speedy = 10
             
         now = pygame.time.get_ticks()
 
@@ -173,7 +174,7 @@ class UNIC(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.bottom = y
         # Sorteia uma velocidade inicial
-        self.speedx = -5
+        self.speedx = -4
         self.speedy = 0
         
         # Melhora a colisÃ£o estabelecendo um raio de um circulo
@@ -284,7 +285,7 @@ class BARRIL(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.bottom = y
         # Sorteia uma velocidade inicial
-        self.speedx = -3
+        self.speedx = -1.5
         self.speedy = 0
                                      
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -345,7 +346,7 @@ class Premio(pygame.sprite.Sprite):
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(premio_img, (35, 40))
-        
+        self.image.set_colorkey(WHITE)
 #        # Deixando transparente.
 #        self.image.set_colorkey(BLACK)
         
@@ -586,12 +587,15 @@ def game_screen(screen):
     p = Premio(assets["premio_img"])
     all_sprites.add(p)
     mobs4.add(p)
-    
+
     lives = 3
     PLAYING =  0
     DONE = 2
     x = 00
     contador = 1
+    tesouros = 0
+        
+    
     pygame.mixer.music.play(loops=-1)
     
     for i in  range(lives):
@@ -648,7 +652,13 @@ def game_screen(screen):
                 life.draw(screen)
                 b.rect.left = 1000 
                 u.rect.left = 1000
-                
+                if contador == 1 or contador%4 == 3: 
+                    p = Premio(assets["premio_img"])
+                    all_sprites.add(p)
+                    mobs4.add(p)
+                    p.rect.left = random.randint(750,900)
+                    p.rect.bottom =  635 - 110
+        
                 contador +=1
                 if contador % 3 == 1:
                     background = assets["background"]
@@ -692,14 +702,15 @@ def game_screen(screen):
                 
                 
             hits = pygame.sprite.spritecollide(player, mobs4, True)
+            
             if hits:
+                p.kill
                 p = Premio(assets["premio_img"])
                 all_sprites.add(p)
                 mobs4.add(p)
-                p.rect.left = 5
+                p.rect.left = 5 + 40*tesouros
                 p.rect.top = 25
-                
-                
+                tesouros += 1 
                 
             if lives <= 0:
                 player.kill()
