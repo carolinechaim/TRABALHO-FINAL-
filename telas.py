@@ -203,19 +203,19 @@ def game_screen(screen):
         
                 contador +=1
                 if contador % 3 == 1:
-                    background = assets["background"]
+                    background = assets["background2"]
                     background_rect = background.get_rect() 
                     m.rect.left = random.randint(450,1000)
                     m.rect.bottom = 710
                             
                 elif contador % 3 == 2:
-                    background = assets["background2"]
+                    background = assets["background3"]
                     background_rect = background.get_rect()
                     m.rect.left = random.randint(450,1000)
                     m.rect.bottom = 710
                 
                 elif contador % 3 == 0:
-                    background = assets["background3"]
+                    background = assets["background"]
                     background_rect = background.get_rect()
                     m.rect.left = random.randint(450,1000)
                     m.rect.bottom = 710
@@ -277,7 +277,11 @@ def game_screen(screen):
             text_surface = score_font.render("{:0}X ".format(tesouros), True, YELLOW)
             text_rect = text_surface.get_rect()
             text_rect.left = 5 + 40
+
             text_rect.top = 25
+
+            text_rect.bottom = 70
+
             screen.blit(text_surface, text_rect)        
 
         # Depois de desenhar tudo, inverte o display.

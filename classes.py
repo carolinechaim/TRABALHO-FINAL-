@@ -367,7 +367,7 @@ class PREMIO (pygame.sprite.Sprite):
 
         self.rect.left = 100
         # Sorteia um lugar inicial em y
-        self.rect.top = 15
+        self.rect.top = 30
         # Melhora a colisÃ£o estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .45 / 2)
 
