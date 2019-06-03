@@ -388,7 +388,7 @@ class Back(pygame.sprite.Sprite):
 
 
 # Carrega todos os assets uma vez sÃ³.
-def load_assets(img_dir):
+def load_assets(img_dir, snd_dir, fnt_dir):
     assets = {}
     assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
@@ -433,10 +433,19 @@ def load_assets(img_dir):
     boneco_anim = []
     for i in range(5):
         filename = 'boneco_{}.png'.format(i)
-        img0 = pygame.image.load(path.join(img_dir, filename)).convert()
+        img0 = pygame.image.load(path.join(img_dir,filename)).convert()
         img0 = pygame.transform.scale(img0, (60, 103))        
         img0.set_colorkey(BLACK)
         boneco_anim.append(img0)
     assets["boneco_anim"] = boneco_anim
-#    assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
+    
+    
+    gameover_anim = []
+    for i in range(2):
+        filename = 'gameover{}.png'.format(i)
+        img6 = pygame.image.load(path.join(img_dir,filename)).convert()
+        img6 = pygame.transform.scale(img6, (1000, 700))        
+        gameover_anim.append(img6)
+    assets["gameover_anim"] = gameover_anim
+
     return assets

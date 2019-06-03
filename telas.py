@@ -9,7 +9,7 @@ from classes import Player, HOLE, UNIC, LIVES, BARRIL, Premio, Back, load_assets
 
 def init_screen(screen):
     # Carrega todos os assets uma vez sÃ³ e guarda em um dicionÃ¡rio
-    assets = load_assets(img_dir)
+    assets = load_assets(img_dir, snd_dir, fnt_dir)
     # VariÃ¡vel para o ajuste de velocidade
     clock = pygame.time.Clock()
 
@@ -46,9 +46,15 @@ def init_screen(screen):
 
 
 def end_game(screen):
-    assets= load_assets(img_dir)
-    background = assets["game_over"]
+    assets= load_assets(img_dir, snd_dir, fnt_dir)
+    background = assets["gameover"]
     background_rect = background.get_rect() 
+    
+#    background = Back(assets["back_anim"])
+#    
+#    all_sprites = pygame.sprite.Group()
+#    all_sprites.add(background)
+    
     running = True
     while running:
         for event in pygame.event.get():
@@ -65,12 +71,19 @@ def end_game(screen):
                     running = False
         screen.fill(BLACK)
         screen.blit(background, background_rect)
+        
+#                all_sprites.update()
+#        # A cada loop, redesenha o fundo e os sprites
+#        all_sprites.draw(screen)
+#
+#        # Depois de desenhar tudo, inverte o display.
+#        pygame.display.flip()
         pygame.display.flip()
     return state
                 
 def game_screen(screen):
     # Carrega todos os assets uma vez sÃ³ e guarda em um dicionÃ¡rio
-    assets = load_assets(img_dir)
+    assets = load_assets(img_dir, snd_dir, fnt_dir)
 
     # VariÃ¡vel para o ajuste de velocidade
     clock = pygame.time.Clock()
