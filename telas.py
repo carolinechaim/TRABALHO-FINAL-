@@ -4,7 +4,7 @@ from os import path
 
 from configuracoes import img_dir, snd_dir,fnt_dir, WIDTH, HEIGHT, BLACK, YELLOW, WHITE, RED, FPS, QUIT, FIM, GRAVITY, GAME
 
-from classes import Player, HOLE, UNIC, LIVES, BARRIL, Premio, Back, load_assets
+from classes import Player, HOLE, UNIC, LIVES, BARRIL, Premio, Back, load_assets,PREMIO
 
 
 def init_screen(screen):
@@ -112,6 +112,7 @@ def game_screen(screen):
     mobs2 = pygame.sprite.Group()
     mobs3 = pygame.sprite.Group()
     mobs4 = pygame.sprite.Group()
+    mobs5 = pygame.sprite.Group()
     life = pygame.sprite.Group()
 
 
@@ -135,6 +136,11 @@ def game_screen(screen):
     p = Premio(assets["premio_img"])
     all_sprites.add(p)
     mobs4.add(p)
+
+    p2 = PREMIO(assets["saco_2"])
+    all_sprites.add(p2)
+    mobs5.add(p2)
+
 
     lives = 3
     PLAYING =  0
@@ -267,7 +273,11 @@ def game_screen(screen):
                 assets["musica_fim"].play()
                 return FIM
 
-                    
+            
+            p = Premio(assets["premio_img"])
+            mobs4.add(p)
+            p.rect.left = 5 + 40*2
+            p.rect.top = 25   
 
 
             # A cada loop, redesenha o fundo e os sprites
@@ -276,15 +286,15 @@ def game_screen(screen):
             all_sprites.draw(screen)
             life.draw(screen)
 
-            p = Premio(assets["premio_img"])
-            mobs4.add(p)
-            p.rect.left = 5 + 40*2
-            p.rect.top = 25
 
             text_surface = score_font.render("{:0}X ".format(tesouros), True, YELLOW)
             text_rect = text_surface.get_rect()
             text_rect.left = 5 + 40
+
+            text_rect.top = 25
+
             text_rect.bottom = 70
+
             screen.blit(text_surface, text_rect)        
 
         # Depois de desenhar tudo, inverte o display.
