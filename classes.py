@@ -339,7 +339,50 @@ class Premio(pygame.sprite.Sprite):
     def update(self):
         
     	pass
+
+
+class PREMIO (pygame.sprite.Sprite):
     
+    # Construtor da classe.
+    def __init__(self, saco_2):
+        q = [635 - 110, 635]
+    
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(saco_2, (47, 39))
+        self.image.set_colorkey(WHITE)
+#        # Deixando transparente.
+#        self.image.set_colorkey(BLACK)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        # Sorteia uma velocidade inicial
+        self.speedx = 0
+        self.speedy = 0
+
+
+        self.rect.left = 100
+        # Sorteia um lugar inicial em y
+        self.rect.top = 15
+        # Melhora a colisÃ£o estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .45 / 2)
+
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 75
+        
+    # Metodo que atualiza a posiÃ§Ã£o do meteoro
+    def update(self):
+        
+    	pass
+        
 class Back(pygame.sprite.Sprite):
     
     # Construtor da classe.
@@ -403,7 +446,7 @@ def load_assets(img_dir):
     assets["unicornio"] = pygame.mixer.Sound(path.join(snd_dir, 'Unicorn Puking Sound effect COPYRIGHT FREE-[AudioTrimmer.com]-[AudioTrimmer.com].ogg'))
     assets["parado"] = pygame.image.load(path.join(img_dir, 'boneco_1.png')).convert()
     assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
-    
+    assets["saco_2"] = pygame.image.load(path.join(img_dir, 'saco_2.png')).convert()
 
 
     bar_anim=[]
