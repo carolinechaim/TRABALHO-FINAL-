@@ -483,12 +483,5 @@ def load_assets(img_dir, snd_dir, fnt_dir):
     assets["boneco_anim"] = boneco_anim
     
     
-#    gameover_anim = []
-#    for i in range(2):
-#        filename = 'gameover{}.png'.format(i)
-#        img6 = pygame.image.load(path.join(gameover_dir,filename)).convert()
-#        img6 = pygame.transform.scale(img6, (1000, 700))        
-#        gameover_anim.append(img6)
-#    assets["gameover_anim"] = gameover_anim
 
     return assets
