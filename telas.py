@@ -46,10 +46,18 @@ def init_screen(screen):
 
 
 def end_game(screen):
-    assets= load_assets(img_dir)
+    assets= load_assets(img_dir, fnt_dir)
     background = assets["game_over"]
+    score_font = assets["score_font"]
     background_rect = background.get_rect() 
     running = True
+    
+#    text_surface = score_font.render("{:0}X ".format(tesouros), True, YELLOW)
+#    text_rect = text_surface.get_rect()
+#    text_rect.left = 5 + 40
+#    text_rect.bottom = 70  
+#    screen.blit(text_surface, text_rect) 
+    
     while running:
         for event in pygame.event.get():
                         # Verifica se apertou alguma tecla.
@@ -71,6 +79,8 @@ def end_game(screen):
 def game_screen(screen):
     # Carrega todos os assets uma vez sÃ³ e guarda em um dicionÃ¡rio
     assets = load_assets(img_dir)
+    assets = load_assets(snd_dir)
+    assets = load_assets(fnt_dir)
 
     # VariÃ¡vel para o ajuste de velocidade
     clock = pygame.time.Clock()
