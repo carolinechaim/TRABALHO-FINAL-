@@ -45,10 +45,11 @@ def init_screen(screen):
     return state
 
 
-def end_game(screen):
-    assets= load_assets(img_dir, snd_dir, fnt_dir)
-    
+def end_game(screen,tesouro):
+    assets = load_assets(img_dir, snd_dir, fnt_dir)
+
     background = assets["game_over"]
+    score_font = assets["score_font"]
     background_rect = background.get_rect() 
     
 #    background = Back(assets["gameover_anim"])
@@ -58,10 +59,15 @@ def end_game(screen):
     
     running = True
     while running:
+        text_surface = score_font.render("{:0}".format(tesouro), True, YELLOW)
+        text_rect = text_surface.get_rect()
+        text_rect.left = WIDTH/2
+
+        text_rect.top = 195
+
         for event in pygame.event.get():
-                        # Verifica se apertou alguma tecla.
             if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-                        # Dependendo da tecla, altera a velocidade.
+                # Dependendo da tecla, altera a velocidade.
                 if event.key == pygame.K_y:
                     pygame.mixer.music.set_volume(0) 
                     state = GAME
@@ -73,13 +79,8 @@ def end_game(screen):
                     
         screen.fill(BLACK)
         screen.blit(background, background_rect)
-        
-#        all_sprites.update()
-#        # A cada loop, redesenha o fundo e os sprites
-#        all_sprites.draw(screen)
-#
-#        # Depois de desenhar tudo, inverte o display.
-#        pygame.display.flip()
+        screen.blit(text_surface, text_rect)
+
         pygame.display.flip()
     return state
                 
@@ -273,7 +274,7 @@ def game_screen(screen):
                 player.kill()
                 pygame.mixer.music.stop()
                 assets["musica_fim"].play()
-                return FIM
+                return FIM, tesouros
 
             
             p = Premio(assets["premio_img"])

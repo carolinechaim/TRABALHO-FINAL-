@@ -29,9 +29,9 @@ try:
         if state == INIT:
             state = init_screen(screen)
         elif state == GAME:
-            state = game_screen(screen)
+            state, tesouro = game_screen(screen)
         elif state == FIM:
-            state = end_game(screen)
+            state = end_game(screen,tesouro)
         else:
             state = QUIT
 finally:
