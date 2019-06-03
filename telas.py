@@ -197,19 +197,19 @@ def game_screen(screen):
         
                 contador +=1
                 if contador % 3 == 1:
-                    background = assets["background"]
+                    background = assets["background2"]
                     background_rect = background.get_rect() 
                     m.rect.left = random.randint(450,1000)
                     m.rect.bottom = 710
                             
                 elif contador % 3 == 2:
-                    background = assets["background2"]
+                    background = assets["background3"]
                     background_rect = background.get_rect()
                     m.rect.left = random.randint(450,1000)
                     m.rect.bottom = 710
                 
                 elif contador % 3 == 0:
-                    background = assets["background3"]
+                    background = assets["background"]
                     background_rect = background.get_rect()
                     m.rect.left = random.randint(450,1000)
                     m.rect.bottom = 710

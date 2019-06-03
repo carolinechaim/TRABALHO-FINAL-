@@ -12,8 +12,6 @@ from telas import game_screen
 from telas import end_game
 
 
-
-
 # InicializaÃ§Ã£o do Pygame.
 pygame.init()
 pygame.mixer.init()
