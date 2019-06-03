@@ -50,11 +50,21 @@ def end_game(screen):
     
     background = assets["game_over"]
     background_rect = background.get_rect() 
+    score_font = assets["score_font"]
     
-#    background = Back(assets["gameover_anim"])
-#    
-#    all_sprites = pygame.sprite.Group()
-#    all_sprites.add(background)
+    
+#    text_surface = score_font.render("{:0}X ".format(tesouros), True, YELLOW)
+    text_surface = score_font.render("X ", True, YELLOW)
+    text_rect = text_surface.get_rect()
+    text_rect.left = 5 + 40
+
+    text_rect.top = 25
+
+    text_rect.bottom = 70
+
+    screen.blit(text_surface, text_rect)  
+    
+
     
     running = True
     while running:
@@ -74,12 +84,7 @@ def end_game(screen):
         screen.fill(BLACK)
         screen.blit(background, background_rect)
         
-#        all_sprites.update()
-#        # A cada loop, redesenha o fundo e os sprites
-#        all_sprites.draw(screen)
-#
-#        # Depois de desenhar tudo, inverte o display.
-#        pygame.display.flip()
+
         pygame.display.flip()
     return state
                 
@@ -297,8 +302,9 @@ def game_screen(screen):
 
             text_rect.bottom = 70
 
-            screen.blit(text_surface, text_rect)        
+            screen.blit(text_surface, text_rect)   
+            
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
-    return QUIT
+    return QUIT, tesouros
