@@ -433,7 +433,7 @@ class Back(pygame.sprite.Sprite):
 # Carrega todos os assets uma vez sÃ³.
 def load_assets(img_dir, snd_dir, fnt_dir):
     assets = {}
-    assets["game_over"] = pygame.image.load(path.join(img_dir, "game_over.png")).convert()
+    assets["game_over"] = pygame.image.load(path.join(img_dir, "gameover1.png")).convert()
     assets["hole_img"] = pygame.image.load(path.join(img_dir, "buraco.png")).convert()
     assets["premio_img"] = pygame.image.load(path.join(img_dir, "saco_1.png")).convert()
     assets["lives_img"] = pygame.image.load(path.join(img_dir, "coracao.png")).convert()

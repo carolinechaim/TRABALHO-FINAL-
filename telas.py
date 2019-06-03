@@ -70,6 +70,7 @@ def end_game(screen):
                 if event.key == pygame.K_n:
                     state = QUIT
                     running = False
+                    
         screen.fill(BLACK)
         screen.blit(background, background_rect)
         
