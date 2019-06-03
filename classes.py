@@ -4,7 +4,7 @@ from os import path
 
 from configuracoes import img_dir, snd_dir,fnt_dir, WIDTH, HEIGHT, BLACK, YELLOW, WHITE, RED, FPS, QUIT, FIM, GRAVITY, GAME
 
-
+gameover_dir = path.join(path.dirname(__file__), 'Imagens', "gameover")
 # Classe Jogador que representa a nave
 class Player(pygame.sprite.Sprite):
     
@@ -483,12 +483,12 @@ def load_assets(img_dir, snd_dir, fnt_dir):
     assets["boneco_anim"] = boneco_anim
     
     
-    gameover_anim = []
-    for i in range(2):
-        filename = 'gameover{}.png'.format(i)
-        img6 = pygame.image.load(path.join(img_dir,filename)).convert()
-        img6 = pygame.transform.scale(img6, (1000, 700))        
-        gameover_anim.append(img6)
-    assets["gameover_anim"] = gameover_anim
+#    gameover_anim = []
+#    for i in range(2):
+#        filename = 'gameover{}.png'.format(i)
+#        img6 = pygame.image.load(path.join(gameover_dir,filename)).convert()
+#        img6 = pygame.transform.scale(img6, (1000, 700))        
+#        gameover_anim.append(img6)
+#    assets["gameover_anim"] = gameover_anim
 
     return assets

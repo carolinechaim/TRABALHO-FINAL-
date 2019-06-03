@@ -47,10 +47,11 @@ def init_screen(screen):
 
 def end_game(screen):
     assets= load_assets(img_dir, snd_dir, fnt_dir)
-    background = assets["gameover"]
+    
+    background = assets["game_over"]
     background_rect = background.get_rect() 
     
-#    background = Back(assets["back_anim"])
+#    background = Back(assets["gameover_anim"])
 #    
 #    all_sprites = pygame.sprite.Group()
 #    all_sprites.add(background)
@@ -72,7 +73,7 @@ def end_game(screen):
         screen.fill(BLACK)
         screen.blit(background, background_rect)
         
-#                all_sprites.update()
+#        all_sprites.update()
 #        # A cada loop, redesenha o fundo e os sprites
 #        all_sprites.draw(screen)
 #
