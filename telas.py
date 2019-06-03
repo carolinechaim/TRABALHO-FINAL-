@@ -271,6 +271,7 @@ def game_screen(screen):
             text_surface = score_font.render("{:0}X ".format(tesouros), True, YELLOW)
             text_rect = text_surface.get_rect()
             text_rect.left = 5 + 40
+            text_rect.bottom = 70
             screen.blit(text_surface, text_rect)        
 
         # Depois de desenhar tudo, inverte o display.
