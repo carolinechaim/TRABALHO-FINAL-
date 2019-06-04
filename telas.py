@@ -222,6 +222,10 @@ def game_screen(screen):
                 b.rect.left = 1000 
                 u.rect.left = 1000
                 score += 100
+                if score>= 700:
+                    u.speedx = -7
+                    b.speedx =-3
+                    
                 if contador == 1 or contador%4 == 3: 
                     p = Premio(assets["premio_img"])
                     all_sprites.add(p)
@@ -288,8 +292,6 @@ def game_screen(screen):
                 p2.rect.left =150
             elif len(str(score)) == 4:
                 p2.rect.left =175
-                
-                
             if lives <= 0:
                 player.kill()
                 pygame.mixer.music.stop()
