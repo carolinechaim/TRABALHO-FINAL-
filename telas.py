@@ -139,6 +139,9 @@ def game_screen(screen):
     all_sprites.add(m)
     mobs1.add(m)
 
+    w = HOLE(assets["hole_img"])
+
+                    
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
     mobs2.add(u)
@@ -223,9 +226,13 @@ def game_screen(screen):
                 u.rect.left = 1000
                 score += 100
                 if score>= 700:
+                    all_sprites.remove(w)
+                    mobs1.remove(w)                   
                     u.speedx = -7
                     b.speedx =-3
-                    
+                    all_sprites.add(w)
+                    mobs1.add(w)
+                    w.rect.left = m.rect.left +250
                 if contador == 1 or contador%4 == 3: 
                     p = Premio(assets["premio_img"])
                     all_sprites.add(p)
@@ -259,10 +266,20 @@ def game_screen(screen):
                     player.rect.left = 100 
                     lives -=1 
                     life.empty()
-                    if e ==  mobs1:
+                    if e ==  mobs1 and score <700:
                         m = HOLE(assets["hole_img"])
                         all_sprites.add(m)
                         mobs1.add(m)
+                    elif e ==  mobs1 and score >=700:
+                        m.kill()
+                        w.kill()
+                        m = HOLE(assets["hole_img"])
+                        all_sprites.add(m)
+                        mobs1.add(m)
+                        w = HOLE(assets["hole_img"])
+                        all_sprites.add(w)
+                        mobs1.add(w)
+                        w.rect.left = m.rect.left - random.randint(200,400)
                     if e ==  mobs2:
                         assets["unicornio"].play()
                         u = UNIC(assets["uni_anim"])
