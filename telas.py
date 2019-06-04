@@ -45,7 +45,7 @@ def init_screen(screen):
     return state
 
 
-def end_game(screen,tesouro):
+def end_game(screen,score):
     assets = load_assets(img_dir, snd_dir, fnt_dir)
 
     background = assets["game_over"]
@@ -57,7 +57,7 @@ def end_game(screen,tesouro):
 #    text_surface = score_font.render("{:0}X ".format(tesouros), True, YELLOW)
     text_surface = score_font.render("X ", True, YELLOW)
     text_rect = text_surface.get_rect()
-    text_rect.left = 5 + 40
+    text_rect.left = 40
 
     text_rect.top = 25
 
@@ -69,7 +69,7 @@ def end_game(screen,tesouro):
     
     running = True
     while running:
-        text_surface = score_font.render("{:0}".format(tesouro), True, YELLOW)
+        text_surface = score_font.render("{:0}".format(score), True, YELLOW)
         text_rect = text_surface.get_rect()
         text_rect.left = WIDTH/2
 
@@ -139,12 +139,9 @@ def game_screen(screen):
     all_sprites.add(m)
     mobs1.add(m)
 
-
-
     u = UNIC(assets["uni_anim"])
     all_sprites.add(u)
     mobs2.add(u)
-
     
     b = BARRIL(assets["bar_anim"])
     all_sprites.add(b)
@@ -224,6 +221,7 @@ def game_screen(screen):
                 life.draw(screen)
                 b.rect.left = 1000 
                 u.rect.left = 1000
+                score += 100
                 if contador == 1 or contador%4 == 3: 
                     p = Premio(assets["premio_img"])
                     all_sprites.add(p)
@@ -283,18 +281,20 @@ def game_screen(screen):
             
             if hits: 
                 tesouros += 1 
+                score += 150
+            if len(str(score)) == 1:
+                p2.rect.left =100
+            elif len(str(score)) == 3:
+                p2.rect.left =150
+            elif len(str(score)) == 4:
+                p2.rect.left =175
+                
                 
             if lives <= 0:
                 player.kill()
                 pygame.mixer.music.stop()
                 assets["musica_fim"].play()
-                return FIM, tesouros
-
-            
-            p = Premio(assets["premio_img"])
-            mobs4.add(p)
-            p.rect.left = 5 + 40*2
-            p.rect.top = 25   
+                return FIM, score
 
 
             # A cada loop, redesenha o fundo e os sprites
@@ -304,13 +304,12 @@ def game_screen(screen):
             life.draw(screen)
 
 
-            text_surface = score_font.render("{:0}X ".format(tesouros), True, YELLOW)
+            text_surface = score_font.render("{:0}X ".format(score), True, YELLOW)
             text_rect = text_surface.get_rect()
-            text_rect.left = 5 + 40
+            text_rect.left = 45
 
-            text_rect.top = 25
-
-            text_rect.bottom = 70
+            text_rect.top = 51
+            text_rect.bottom = 101
 
             screen.blit(text_surface, text_rect)   
             
